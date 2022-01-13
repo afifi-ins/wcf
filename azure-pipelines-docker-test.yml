@@ -15,5 +15,6 @@ steps:
 
 - script: |
     echo build
-    build.cmd
+    ls
+    sh ./build.sh
   displayName: 'Run a multi-line script'
