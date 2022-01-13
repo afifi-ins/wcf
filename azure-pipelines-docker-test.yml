@@ -12,7 +12,7 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-
+- checkout: self
 - script: eng/common/cibuild.cmd
     -configuration Debug
     -preparemachine
