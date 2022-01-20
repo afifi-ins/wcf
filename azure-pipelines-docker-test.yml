@@ -13,7 +13,7 @@ pool:
   
 resources:
   containers:
-  - container: windowsContainer
+  - container: windows_container
     image: mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2022
     options: --hostname WCF_Web_Hosted --ip 192.168.0.1 --entrypoint powershell src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd 38
   
@@ -25,7 +25,7 @@ stages:
   - job: Build_IIS_Service_job
     displayName: Build and run web hosted service
     services:
-      web_hosted_service: windowsContainer
+      web_hosted_service: windows_container
     steps:
     - checkout: self
 
