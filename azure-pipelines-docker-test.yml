@@ -50,13 +50,13 @@ stages:
   - job: Windows_release_job
     displayName: Windows Release tests
     container: windows_container
-    steps:
-    - script: dir
-    - script: eng\common\cibuild.cmd 
-        -configuration Debug
-        -preparemachine
-        /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
-        /p:Test=true /p:IntegrationTest=true /p:Pack=true /p:Publish=true
+    # steps:
+    # - script: eng\common\cibuild.cmd 
+    #     -configuration Debug
+    #     -preparemachine
+    #     /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
+    #     /p:Test=true /p:IntegrationTest=true /p:Pack=true /p:Publish=true
+    #   displayName: Run tests
 
   - job: Windows_debug_job
     displayName: Windows Debug tests
