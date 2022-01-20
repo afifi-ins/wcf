@@ -14,9 +14,9 @@ pool:
 resources:
   containers:
   - container: web_hosted_service_container
-    #image: 'mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019'
-    image: 'mcr.microsoft.com/dotnet/framework/wcf:latest'
-    options: --hostname wcf_web_hosted --entrypoint "powershell -NoLogo -NoExit -Command dir;" 
+    image: 'mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019'
+    #image: 'mcr.microsoft.com/dotnet/framework/wcf:latest'
+    options: --entrypoint "src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd 38" 
     #; wcf\src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd 38
   - container: windows_container
     image: 'mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019'
@@ -32,12 +32,12 @@ stages:
     steps:
     - script: docker image list
 
-  # - job: Build_IIS_Service_job
-  #   displayName: Build and run web hosted service
-  #   services:
-  #     web_hosted_service: web_hosted_service_container
-  #   # steps:
-  #   # - checkout: self
+  - job: Build_IIS_Service_job
+    displayName: Build and run web hosted service
+    services:
+      web_hosted_service: web_hosted_service_container
+    # steps:
+    # - checkout: self
 
   - job: Build_Selfhosted_Service_job
     displayName: Build and run self-hosted service
