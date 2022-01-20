@@ -22,7 +22,7 @@ stages:
 - stage: Build_Service_stage
   displayName: Build and Run WCF Services
   jobs:
-  - job: p
+  - job: list_images
     displayName: list docker images
     steps:
     - script: docker image list
