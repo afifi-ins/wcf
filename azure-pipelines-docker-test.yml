@@ -14,9 +14,9 @@ pool:
 resources:
   containers:
   - container: web_hosted_service_container
-    #image: 'mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019'
-    image: 'mcr.microsoft.com/dotnet/framework/wcf:latest'
-    options: --hostname wcf_web_hosted --entrypoint "powershell  -NoLogo -NoExit -Command dir; git clone https://github.com/afifi-ins/wcf.git; dir;"
+    image: 'mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019'
+    #image: 'mcr.microsoft.com/dotnet/framework/wcf:latest'
+    options: --hostname wcf_web_hosted --entrypoint "powershell  -NoLogo -NoExit -Command dir"
     #; wcf\src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd 38
   
 stages:
