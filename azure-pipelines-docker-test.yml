@@ -14,14 +14,18 @@ pool:
 resources:
   containers:
   - container: windows_container
-    image: 'mcr.microsoft.com/dotnet/framework/wcf:latest'
+    image: 'mcr.microsoft.com/dotnet/framework/runtime:4.8-windowsservercore-ltsc2019'
     options: --hostname wcf_web_hosted --ip 192.168.0.1 --entrypoint powershell src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd 38
   
-
 stages:
 - stage: Build_Service_stage
   displayName: Build and Run WCF Services
   jobs:
+  - job: p
+    displayName: print images
+    steps:
+    - script: docker image list
+
   - job: Build_IIS_Service_job
     displayName: Build and run web hosted service
     services:
