@@ -27,7 +27,8 @@ stages:
     steps:
     - bash: echo "A"
 
-- stage: Run WCF Tests
+- stage: Run_WCF_Tests
+  displayName: Build and Run WCF Tests
   jobs:
   - job: Windows_release_job
     displayName: Windows Release tests
