@@ -16,7 +16,7 @@ resources:
   - container: web_hosted_service_container
     image: 'mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019'
     #image: 'mcr.microsoft.com/dotnet/framework/wcf:latest'
-    options: --hostname wcf_web_hosted --it --entrypoint "powershell -NoLogo -NoExit -Command dir;"
+    options: --hostname wcf_web_hosted -it --entrypoint "powershell -NoLogo -NoExit -Command dir;"
     #; wcf\src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd 38
   
 stages:
