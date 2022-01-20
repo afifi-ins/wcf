@@ -19,7 +19,7 @@ resources:
     options: --hostname wcf_web_hosted --entrypoint "powershell -NoLogo -NoExit -Command dir;" 
     #; wcf\src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd 38
   - container: windows_container
-    image: 'windows-latest'
+    image: 'mcr.microsoft.com/dotnet/sdk:6.0'
     
   
 stages:
