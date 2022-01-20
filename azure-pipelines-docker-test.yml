@@ -10,13 +10,45 @@ pr:
 
 pool:
   vmImage: windows-latest
+  
+stages:
 
-steps:
-- checkout: self
+- stage: Build_Service_stage
+  displayName: Build and Run WCF Services
+  jobs:
+  - job: Build_IIS_Service_job
+    displayName: Build and run web hosted service
+    steps:
+    - checkout: self
+    - bash: echo "A"
 
-- script: eng\common\cibuild.cmd
-    -configuration Debug
-    -preparemachine
-    /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
-    /p:Test=false
-  displayName: Windows Build / Publish
+  - job: Build_Selfhosted_Service_job
+    displayName: Build and run self-hosted service
+    steps:
+    - bash: echo "A"
+
+- stage: Run WCF Tests
+  jobs:
+  - job: Windows_release_job
+    displayName: Windows Release tests
+    steps:
+    - script: eng\common\cibuild.cmd 
+       -configuration Debug
+       -preparemachine
+       /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
+       /p:Test=false
+
+  - job: Windows_debug_job
+    displayName: Windows Debug tests
+    steps:
+    - bash: echo "A"
+
+  - job: Linux_release_job
+    displayName: Linux Release tests
+    steps:
+    - bash: echo "A"
+
+  - job: Linux_debug_job
+    displayName: Linux Debug tests
+    steps:
+    - bash: echo "A"
