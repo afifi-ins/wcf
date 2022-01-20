@@ -16,8 +16,11 @@ resources:
   - container: web_hosted_service_container
     image: 'mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019'
     #image: 'mcr.microsoft.com/dotnet/framework/wcf:latest'
-    options: --hostname wcf_web_hosted -it --entrypoint "cmd /s /c powershell -NoLogo -NoExit -Command dir;"
+    options: --hostname wcf_web_hosted --entrypoint "powershell -NoLogo -NoExit -Command dir;" 
     #; wcf\src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd 38
+  - container: windows_container
+    image: 'windows-latest'
+    
   
 stages:
 - stage: Build_Service_stage
@@ -28,12 +31,12 @@ stages:
     steps:
     - script: docker image list
 
-  - job: Build_IIS_Service_job
-    displayName: Build and run web hosted service
-    services:
-      web_hosted_service: web_hosted_service_container
-    steps:
-    - checkout: self
+  # - job: Build_IIS_Service_job
+  #   displayName: Build and run web hosted service
+  #   services:
+  #     web_hosted_service: web_hosted_service_container
+  #   # steps:
+  #   # - checkout: self
 
   - job: Build_Selfhosted_Service_job
     displayName: Build and run self-hosted service
@@ -45,13 +48,15 @@ stages:
   jobs:
   - job: Windows_release_job
     displayName: Windows Release tests
+    container: windows_container
     steps:
     - bash: echo "A"
-    # - script: eng\common\cibuild.cmd 
-    #    -configuration Debug
-    #    -preparemachine
-    #    /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
-    #    /p:Test=false
+    - script: eng\common\cibuild.cmd 
+       -configuration Debug
+       -preparemachine
+       /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
+       /p:Test=true /p:IntegrationTest=true /p:Pack=true /p:Publish=true
+       #/p:Test=false 
 
   - job: Windows_debug_job
     displayName: Windows Debug tests
