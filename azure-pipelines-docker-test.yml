@@ -9,18 +9,25 @@ pr:
     - main
 
 pool:
-  vmImage: windows-latest
+  vmImage: 'ubuntu-latest'
   
-stages:
+resources:
+  containers:
+  - container: windowsContainer
+    image: 'windows-latest'
+    options: --hostname WCF_Web_Hosted --ip 192.168.0.1  --entrypoint powershell src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd 38
+  
 
+stages:
 - stage: Build_Service_stage
   displayName: Build and Run WCF Services
   jobs:
   - job: Build_IIS_Service_job
     displayName: Build and run web hosted service
+    services:
+      web_hosted_service: windowsContainer
     steps:
     - checkout: self
-    - bash: echo "A"
 
   - job: Build_Selfhosted_Service_job
     displayName: Build and run self-hosted service
@@ -33,11 +40,12 @@ stages:
   - job: Windows_release_job
     displayName: Windows Release tests
     steps:
-    - script: eng\common\cibuild.cmd 
-       -configuration Debug
-       -preparemachine
-       /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
-       /p:Test=false
+    - bash: echo "A"
+    # - script: eng\common\cibuild.cmd 
+    #    -configuration Debug
+    #    -preparemachine
+    #    /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
+    #    /p:Test=false
 
   - job: Windows_debug_job
     displayName: Windows Debug tests
