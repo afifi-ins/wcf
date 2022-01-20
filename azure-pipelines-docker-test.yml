@@ -15,7 +15,7 @@ resources:
   containers:
   - container: windowsContainer
     image: mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2022
-    options: --hostname WCF_Web_Hosted --ip 192.168.0.1  --entrypoint powershell src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd 38
+    options: --hostname WCF_Web_Hosted --ip 192.168.0.1 --entrypoint powershell src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd 38
   
 
 stages:
