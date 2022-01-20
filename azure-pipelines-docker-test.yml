@@ -22,7 +22,7 @@ stages:
   displayName: Build and Run WCF Services
   jobs:
   - job: p
-    displayName: print images
+    displayName: list docker images
     steps:
     - script: docker image list
 
