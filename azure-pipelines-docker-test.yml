@@ -33,6 +33,7 @@ stages:
     displayName: list docker images
     steps:
     - script: docker image list
+    - script: dir
 
   - job: Build_IIS_Service_job
     displayName: Build and run web hosted service
