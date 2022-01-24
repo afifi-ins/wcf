@@ -39,8 +39,8 @@ stages:
     displayName: Build and run web hosted service
     services:
       web_hosted_service: web_hosted_service_container
-    # steps:
-    # - checkout: self
+    steps:
+    - checkout: self
 
   - job: Build_Selfhosted_Service_job
     displayName: Build and run self-hosted service
