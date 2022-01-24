@@ -16,7 +16,8 @@ resources:
   - container: web_hosted_service_container
     image: 'mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019'
     #image: 'mcr.microsoft.com/dotnet/framework/wcf:latest'
-    options: --entrypoint "src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd 38" 
+    #options: --entrypoint "./src/System.Private.ServiceModel/tools/scripts/SetupWcfIISHostedService.cmd 38" 
+    options: --entrypoint "git clone https://github.com/afifi-ins/wcf.git" 
     #; wcf\src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd 38
   - container: windows_container
     image: 'mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019'
