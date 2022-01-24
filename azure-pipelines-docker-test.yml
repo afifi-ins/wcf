@@ -17,7 +17,7 @@ resources:
     image: 'mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019'
     #image: 'mcr.microsoft.com/dotnet/framework/wcf:latest'
     #options: --entrypoint "./src/System.Private.ServiceModel/tools/scripts/SetupWcfIISHostedService.cmd 38" 
-    options: --entrypoint "dir" 
+    options: --entrypoint "powershell dir" 
     #; wcf\src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd 38
   - container: windows_container
     image: 'mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019'
