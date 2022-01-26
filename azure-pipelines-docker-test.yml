@@ -21,15 +21,11 @@ resources:
     #options: --entrypoint "./src/System.Private.ServiceModel/tools/scripts/SetupWcfIISHostedService.cmd 38" 
     options: --entrypoint "C:\__w\1\s\src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd" 
 
-    #options: --entrypoint "1/s/src/System.Private.ServiceModel/tools/scripts/SetupWcfIISHostedService.cmd"
-
-
-    #; wcf\src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd 38
   - container: windows_container
     image: 'mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019'
     #image: 'mcr.microsoft.com/dotnet/sdk:6.0'
   - container: linux_container
-    #image: 'ubuntu:20.04' --not working - wget/curl not found
+    #image: 'ubuntu:20.04' #--not working - wget/curl not found
     image: 'mcr.microsoft.com/dotnet/sdk:6.0'
     
   
@@ -53,10 +49,12 @@ stages:
     dependsOn: buildimage
     steps:
     - checkout: self
+    - script: docker image list
+    - script: dir
     displayName: Build and run web hosted service
-    services:
-      web_hosted_service:
-        image: serivce/webhosted:1.0
+    # services:
+    #   web_hosted_service:
+    #     image: serivce/webhosted:1.0
         # ports:
         # - 6379/tcp
 
