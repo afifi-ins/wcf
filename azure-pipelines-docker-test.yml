@@ -83,17 +83,21 @@ stages:
       vmImage: 'ubuntu-latest'
     container: linux_container
 
+- task: Bash@3
+  inputs:
+    filePath: 'path'
+    arguments: 'arg'
 
     steps:
-    - script: |
-        curl -v http://www.example.com/
-       
-    # - script: eng/common/cibuild.sh
-    #           -configuration Release
-    #           -preparemachine
-    #           /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
-    #           /p:Test=false
-    #   displayName: Linux Build
+    - task: Bash@3
+      inputs:
+        targetType: filePath
+        filePath: 'eng/common/cibuild.sh'
+        arguments: -configuration Release
+              -preparemachine
+              /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
+              /p:Test=false
+        displayName: Linux Build
 
     - script: eng/common/build.sh
         --configuration Release
