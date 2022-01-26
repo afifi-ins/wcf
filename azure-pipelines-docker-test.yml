@@ -60,6 +60,8 @@ stages:
   - job: Build_IIS_Service_job
     steps:
     - checkout: self
+  
+  - job: startcontainer
     displayName: Build and run web hosted service
     services:
       web_hosted_service: web_hosted_service_container
