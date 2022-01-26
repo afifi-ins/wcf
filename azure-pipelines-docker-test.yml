@@ -29,6 +29,7 @@ resources:
 stages:
 - stage: Build_Service_stage
   displayName: Build and Run WCF Services
+  pool: 'ubuntu-latest'
   jobs:
   - job: list_images
     displayName: list docker images
@@ -56,7 +57,7 @@ stages:
     container: windows_container
     # steps:
     # - script: eng\common\cibuild.cmd 
-    #     -configuration Debug
+    #     -configuration Release
     #     -preparemachine
     #     /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
     #     /p:Test=true /p:IntegrationTest=true /p:Pack=true /p:Publish=true
@@ -64,13 +65,35 @@ stages:
 
   - job: Windows_debug_job
     displayName: Windows Debug tests
-    steps:
-    - bash: echo "A"
+    container: windows_container
+    # steps:
+    # - script: eng\common\cibuild.cmd 
+    #     -configuration Debug
+    #     -preparemachine
+    #     /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
+    #     /p:Test=true /p:IntegrationTest=true /p:Pack=true /p:Publish=true
+    #   displayName: Run tests
 
   - job: Linux_release_job
     displayName: Linux Release tests
     steps:
-    - bash: echo "A"
+    - script: eng/common/cibuild.sh
+              -configuration Release
+              -preparemachine
+              $(_TestArgs)
+              /p:Test=false
+      displayName: Linux Build
+
+    - script: eng/common/build.sh
+        --configuration Release
+        --prepareMachine
+        --ci
+        --test
+        --integrationTest
+        /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
+        /p:TestJob=Linux
+        /bl:$(Build.SourcesDirectory)/artifacts/log/Release/Tests.binlog
+      displayName: Linux - Run Tests
 
   - job: Linux_debug_job
     displayName: Linux Debug tests
