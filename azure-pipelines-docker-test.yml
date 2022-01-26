@@ -9,8 +9,8 @@ pr:
     - main
 
 pool:
-  #vmImage: 'windows-latest'
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-latest'
+  #vmImage: 'ubuntu-latest'
   
 resources:
   containers:
@@ -25,7 +25,8 @@ resources:
   - container: windows_container
     image: 'mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019'
     #image: 'mcr.microsoft.com/dotnet/sdk:6.0'
-    
+  - container: linux_container
+    image: 'ubuntu:20.04'
   
 stages:
 - stage: Build_Service_stage
@@ -76,7 +77,9 @@ stages:
     #   displayName: Run tests
 
   - job: Linux_release_job
-    displayName: Linux Release tests
+    displayName: Linux Release tests    
+    pool:
+      vmImage: 'ubuntu-latest'
     steps:
     - script: eng/common/cibuild.sh
               -configuration Release
