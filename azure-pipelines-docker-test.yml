@@ -34,9 +34,10 @@ stages:
   displayName: Build and Run WCF Services
   
   jobs:
-  - job: buildimage
-    displayName: build image
+  - job: build
+    displayName: build
     steps:
+      - checkout: self
       - task: Docker@2
         displayName: Build Docker Image
         inputs:
@@ -45,19 +46,17 @@ stages:
           Dockerfile: docker/Dockerfile
           tags: '1.0'
   
-  - job: Build_IIS_Service_job
-    dependsOn: buildimage
-    steps:
-    - checkout: self
-    - script: docker image list
-    - script: dir
-    displayName: Build and run web hosted service
-    # services:
-    #   web_hosted_service:
-    #     image: serivce/webhosted:1.0
-        # ports:
-        # - 6379/tcp
+      - script: docker image list
+      - script: dir
+      
+      - bash: |
+          echo "Executing docker run command"
+          docker run --name wcfservice -i serivce/webhosted:1.0
 
+      - bash: |
+          echo "Executing docker run command"
+          docker run --name wcfservice -i -v $(Build.SourcesDirectory):"C:\wcf\" serivce/webhosted:1.0
+        displayName: Run docker inline in pipeline
 
   # - job: Build_IIS_Service_job
   #   steps:
