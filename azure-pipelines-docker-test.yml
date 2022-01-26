@@ -19,7 +19,7 @@ resources:
     image: 'mcr.microsoft.com/windows/nanoserver:1809' #--IIS not installed
     #image: 'mcr.microsoft.com/dotnet/framework/wcf:latest'
     #options: --entrypoint "./src/System.Private.ServiceModel/tools/scripts/SetupWcfIISHostedService.cmd 38" 
-    options: --workdir "C:\__w\1\s" --entrypoint "src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd"  
+    options: --entrypoint "C:\wcf\src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd"  -v $(Build.SourcesDirectory):C:\wcf
 
     #options: --entrypoint "1/s/src/System.Private.ServiceModel/tools/scripts/SetupWcfIISHostedService.cmd"
 
@@ -45,32 +45,32 @@ stages:
     - script: docker image list
     - script: dir
 
-  - job: test
-    displayName: build image
-    steps:
-      - task: Docker@2
-        displayName: Build Docker Image
-        inputs:
-          repository: serivce/webhosted
-          command: build
-          Dockerfile: docker/Dockerfile
-          tags: '1.0'
+  # - job: test
+  #   displayName: build image
+  #   steps:
+  #     - task: Docker@2
+  #       displayName: Build Docker Image
+  #       inputs:
+  #         repository: serivce/webhosted
+  #         command: build
+  #         Dockerfile: docker/Dockerfile
+  #         tags: '1.0'
 
-      - script: |
-          dir
-        displayName: List files
+  #     - script: |
+  #         dir
+  #       displayName: List files
       
-      - script: |
-          echo "Executing docker run command"
-          docker run --name wcfservice -i -v $(Build.SourcesDirectory):\wcf -w \wcf serivce/webhosted:1.0
-        displayName: Run docker inline in pipeline
+  #     - script: |
+  #         echo "Executing docker run command"
+  #         docker run --name wcfservice -i -v $(Build.SourcesDirectory):\wcf -w \wcf serivce/webhosted:1.0
+  #       displayName: Run docker inline in pipeline
 
   - job: Build_IIS_Service_job
     steps:
     - checkout: self
     displayName: Build and run web hosted service
     services:
-      web_hosted_service: wcfservice
+      web_hosted_service: web_hosted_service_container
 
 
   - job: Build_Selfhosted_Service_job
