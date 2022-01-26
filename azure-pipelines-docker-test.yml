@@ -38,13 +38,6 @@ stages:
   displayName: Build and Run WCF Services
   
   jobs:
-  - job: list_images
-    displayName: list docker images
-    steps:
-    - checkout: self
-    - script: docker image list
-    - script: dir
-
   - job: buildimage
     displayName: build image
     steps:
@@ -62,7 +55,7 @@ stages:
       
       - script: |
           echo "Executing docker run command"
-          docker run --name wcfservice -i -v "$(Build.SourcesDirectory)"":"C\wcf" -w \wcf serivce/webhosted:1.0
+          docker run --name wcfservice -i -v "$(Build.SourcesDirectory)":"C\wcf" -w \wcf serivce/webhosted:1.0
         displayName: Run docker inline in pipeline
 
   - job: Build_IIS_Service_job
