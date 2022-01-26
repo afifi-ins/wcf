@@ -45,7 +45,7 @@ stages:
     - script: docker image list
     - script: dir
 
-  - job: test
+  - job: buildimage
     displayName: build image
     steps:
       - task: Docker@2
@@ -66,6 +66,7 @@ stages:
         displayName: Run docker inline in pipeline
 
   - job: Build_IIS_Service_job
+    dependsOn: buildimage
     steps:
     - checkout: self
     displayName: Build and run web hosted service
