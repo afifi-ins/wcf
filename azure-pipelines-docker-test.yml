@@ -126,6 +126,8 @@ stages:
 
   - job: Linux_debug_job
     displayName: Linux Debug tests
+    pool:
+      vmImage: 'ubuntu-latest'
     steps:
     - script: eng/common/cibuild.sh
               -configuration Debug
