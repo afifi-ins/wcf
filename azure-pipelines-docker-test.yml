@@ -62,6 +62,7 @@ stages:
     - checkout: self
   
   - job: startcontainer
+    dependsOn: Build_IIS_Service_job
     displayName: Build and run web hosted service
     services:
       web_hosted_service: web_hosted_service_container
