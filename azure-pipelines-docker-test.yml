@@ -19,7 +19,7 @@ resources:
     image: 'mcr.microsoft.com/windows/nanoserver:1809' #--IIS not installed
     #image: 'mcr.microsoft.com/dotnet/framework/wcf:latest'
     #options: --entrypoint "./src/System.Private.ServiceModel/tools/scripts/SetupWcfIISHostedService.cmd 38" 
-    options: --workdir "C:\__w\1\s" --entrypoint "src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd"  
+    options: --entrypoint "C:\wcf\src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd"  -v  D:\a\1\s:C:\wcf
 
     #options: --entrypoint "1/s/src/System.Private.ServiceModel/tools/scripts/SetupWcfIISHostedService.cmd"
 
@@ -53,17 +53,16 @@ stages:
         inputs:
           repository: serivce/webhosted
           command: build
-          Dockerfile: image/Dockerfile
+          Dockerfile: docker/Dockerfile
           tags: '1.0'
 
       - script: |
-          echo $(Build.SourcesDirectory)
           dir
         displayName: List files
       
       - script: |
           echo "Executing docker run command"
-          docker run --name wcfservice -i -v $(Build.SourcesDirectory):/test -w /test serivce/webhosted:1.1
+          docker run --name wcfservice -i -v $(Build.SourcesDirectory):\wcf -w \wcf serivce/webhosted:1.0
         displayName: Run docker inline in pipeline
 
   - job: Build_IIS_Service_job
@@ -71,7 +70,7 @@ stages:
     - checkout: self
     displayName: Build and run web hosted service
     services:
-      web_hosted_service: web_hosted_service_container
+      web_hosted_service: serivce/webhosted:1.0
 
 
   - job: Build_Selfhosted_Service_job
