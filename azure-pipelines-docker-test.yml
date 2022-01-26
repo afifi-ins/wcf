@@ -53,7 +53,7 @@ stages:
         inputs:
           repository: serivce/webhosted
           command: build
-          Dockerfile: image/Dockerfile
+          Dockerfile: docker/Dockerfile
           tags: '1.0'
 
       - script: |
