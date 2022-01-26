@@ -26,7 +26,8 @@ resources:
     image: 'mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019'
     #image: 'mcr.microsoft.com/dotnet/sdk:6.0'
   - container: linux_container
-    image: 'ubuntu:20.04'
+    image: 'ubuntu:18.04'
+    options: 
   
 stages:
 - stage: Build_Service_stage
@@ -81,6 +82,7 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     container: linux_container
+
     steps:
     - bash: |
         apt list && apt-get update && apt-get install -y wget
