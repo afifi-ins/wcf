@@ -48,10 +48,6 @@ stages:
           command: build
           Dockerfile: docker/Dockerfile
           tags: '1.0'
-
-      - script: |
-          dir
-        displayName: List files
       
       - script: |
           echo "Executing docker run command"
