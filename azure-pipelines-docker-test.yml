@@ -75,63 +75,63 @@ stages:
 
 
 
-  - job: Build_Selfhosted_Service_job
-    displayName: Build and run self-hosted service
-    steps:
-    - bash: echo "A"
+#   - job: Build_Selfhosted_Service_job
+#     displayName: Build and run self-hosted service
+#     steps:
+#     - bash: echo "A"
 
-- stage: Run_WCF_Tests
-  displayName: Build and Run WCF Tests
-  jobs:
-  - job: Windows_release_job
-    displayName: Windows Release tests
-    # container: windows_container
-    # steps:
-    # - script: eng\common\cibuild.cmd 
-    #     -configuration Release
-    #     -preparemachine
-    #     /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
-    #     /p:Test=true /p:IntegrationTest=true /p:Pack=true /p:Publish=true
-    #   displayName: Run tests
+# - stage: Run_WCF_Tests
+#   displayName: Build and Run WCF Tests
+#   jobs:
+#   - job: Windows_release_job
+#     displayName: Windows Release tests
+#     # container: windows_container
+#     # steps:
+#     # - script: eng\common\cibuild.cmd 
+#     #     -configuration Release
+#     #     -preparemachine
+#     #     /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
+#     #     /p:Test=true /p:IntegrationTest=true /p:Pack=true /p:Publish=true
+#     #   displayName: Run tests
 
-  - job: Windows_debug_job
-    displayName: Windows Debug tests
-    # container: windows_container
-    # steps:
-    # - script: eng\common\cibuild.cmd 
-    #     -configuration Debug
-    #     -preparemachine
-    #     /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
-    #     /p:Test=true /p:IntegrationTest=true /p:Pack=true /p:Publish=true
-    #   displayName: Run tests
+#   - job: Windows_debug_job
+#     displayName: Windows Debug tests
+#     # container: windows_container
+#     # steps:
+#     # - script: eng\common\cibuild.cmd 
+#     #     -configuration Debug
+#     #     -preparemachine
+#     #     /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
+#     #     /p:Test=true /p:IntegrationTest=true /p:Pack=true /p:Publish=true
+#     #   displayName: Run tests
 
-  - job: Linux_release_job
-    displayName: Linux Release tests
-    pool:
-      vmImage: 'ubuntu-latest'
-    container: linux_container
+#   - job: Linux_release_job
+#     displayName: Linux Release tests
+#     pool:
+#       vmImage: 'ubuntu-latest'
+#     container: linux_container
 
 
-    # steps:
-    # - script: eng/common/cibuild.sh
-    #           -configuration Release
-    #           -preparemachine
-    #           /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
-    #           /p:Test=false
-    #   displayName: Linux Build
+#     # steps:
+#     # - script: eng/common/cibuild.sh
+#     #           -configuration Release
+#     #           -preparemachine
+#     #           /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
+#     #           /p:Test=false
+#     #   displayName: Linux Build
 
-    # - script: eng/common/build.sh
-    #     --configuration Release
-    #     --prepareMachine
-    #     --ci
-    #     --test
-    #     --integrationTest
-    #     /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
-    #     /p:TestJob=Linux
-    #     /bl:$(Build.SourcesDirectory)/artifacts/log/Release/Tests.binlog
-    #   displayName: Linux - Run Tests
+#     # - script: eng/common/build.sh
+#     #     --configuration Release
+#     #     --prepareMachine
+#     #     --ci
+#     #     --test
+#     #     --integrationTest
+#     #     /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
+#     #     /p:TestJob=Linux
+#     #     /bl:$(Build.SourcesDirectory)/artifacts/log/Release/Tests.binlog
+#     #   displayName: Linux - Run Tests
 
-  - job: Linux_debug_job
-    displayName: Linux Debug tests
-    steps:
-    - bash: echo "A"
+#   - job: Linux_debug_job
+#     displayName: Linux Debug tests
+#     steps:
+#     - bash: echo "A"
