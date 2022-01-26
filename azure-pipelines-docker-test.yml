@@ -9,7 +9,8 @@ pr:
     - main
 
 pool:
-  vmImage: 'windows-latest'
+  #vmImage: 'windows-latest'
+  vmImage: 'ubuntu-latest'
   
 resources:
   containers:
@@ -29,7 +30,7 @@ resources:
 stages:
 - stage: Build_Service_stage
   displayName: Build and Run WCF Services
-  pool: 'ubuntu-latest'
+  
   jobs:
   - job: list_images
     displayName: list docker images
