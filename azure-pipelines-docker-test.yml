@@ -19,7 +19,8 @@ resources:
     image: 'mcr.microsoft.com/windows/nanoserver:1809' #--IIS not installed
     #image: 'mcr.microsoft.com/dotnet/framework/wcf:latest'
     #options: --entrypoint "./src/System.Private.ServiceModel/tools/scripts/SetupWcfIISHostedService.cmd 38" 
-    options: --entrypoint "C:\__w\1\s\src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd"
+    options: --workdir "C:\__w\1\s" --entrypoint "src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd"  
+
     #options: --entrypoint "1/s/src/System.Private.ServiceModel/tools/scripts/SetupWcfIISHostedService.cmd"
 
 
@@ -40,6 +41,7 @@ stages:
   - job: list_images
     displayName: list docker images
     steps:
+    - checkout: self
     - script: docker image list
     - script: dir
 
