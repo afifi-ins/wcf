@@ -16,11 +16,11 @@ resources:
   containers:
   - container: web_hosted_service_container
     #image: 'mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019'
-    #image: 'mcr.microsoft.com/windows/nanoserver:1809' --IIS not installed
-    image: 'mcr.microsoft.com/dotnet/framework/wcf:latest'
+    image: 'mcr.microsoft.com/windows/nanoserver:1809' #--IIS not installed
+    #image: 'mcr.microsoft.com/dotnet/framework/wcf:latest'
     #options: --entrypoint "./src/System.Private.ServiceModel/tools/scripts/SetupWcfIISHostedService.cmd 38" 
     #options: --entrypoint "__w\1\s\src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd"
-    options: --entrypoint "__w\1\s\src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd"
+    options: --entrypoint "__w/1/s/src/System.Private.ServiceModel/tools/scripts/SetupWcfIISHostedService.cmd"
 
 
     #; wcf\src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd 38
