@@ -56,9 +56,9 @@ stages:
     displayName: Build and run web hosted service
     services:
       web_hosted_service:
-      image: serivce/webhosted:1.0
-      # ports:
-      # - 6379/tcp
+        image: serivce/webhosted:1.0
+        # ports:
+        # - 6379/tcp
 
 
   # - job: Build_IIS_Service_job
