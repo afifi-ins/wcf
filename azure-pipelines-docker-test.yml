@@ -26,8 +26,8 @@ resources:
     image: 'mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019'
     #image: 'mcr.microsoft.com/dotnet/sdk:6.0'
   - container: linux_container
-    image: 'ubuntu:18.04'
-    options: 
+    image: 'ubuntu:20.04'
+    options: --user root
   
 stages:
 - stage: Build_Service_stage
@@ -83,9 +83,11 @@ stages:
       vmImage: 'ubuntu-latest'
     container: linux_container
 
+
     steps:
-    - bash: |
+    - script: |
         apt list && apt-get update && apt-get install -y wget
+       
     - script: eng/common/cibuild.sh
               -configuration Release
               -preparemachine
