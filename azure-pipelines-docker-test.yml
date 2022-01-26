@@ -48,7 +48,15 @@ stages:
   #         command: build
   #         Dockerfile: docker/Dockerfile
   #         tags: '1.0'
-      
+  
+  # - job: Build_IIS_Service_job
+  #   dependsOn: buildimage
+  #   steps:
+  #   - checkout: self
+  #   displayName: Build and run web hosted service
+  #   services:
+  #     web_hosted_service: wcfservice
+
   - job: Build_IIS_Service_job
     steps:
     - checkout: self
@@ -57,13 +65,7 @@ stages:
       web_hosted_service: web_hosted_service_container
       
 
-  - job: Build_IIS_Service_job
-    dependsOn: buildimage
-    steps:
-    - checkout: self
-    displayName: Build and run web hosted service
-    services:
-      web_hosted_service: wcfservice
+
 
 
   - job: Build_Selfhosted_Service_job
