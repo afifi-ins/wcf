@@ -62,7 +62,7 @@ stages:
       
       - script: |
           echo "Executing docker run command"
-          docker run --name wcfservice -i -v $(Build.SourcesDirectory):/test -w /test serivce/webhosted:1.0
+          docker run --name wcfservice -i -v $(Build.SourcesDirectory):\wcf -w \wcf serivce/webhosted:1.0
         displayName: Run docker inline in pipeline
 
   - job: Build_IIS_Service_job
