@@ -83,10 +83,6 @@ stages:
       vmImage: 'ubuntu-latest'
     container: linux_container
 
-- task: Bash@3
-  inputs:
-    filePath: 'path'
-    arguments: 'arg'
 
     steps:
     - task: Bash@3
