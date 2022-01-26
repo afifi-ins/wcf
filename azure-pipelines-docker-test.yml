@@ -38,34 +38,38 @@ stages:
   displayName: Build and Run WCF Services
   
   jobs:
-  # - job: buildimage
-  #   displayName: build image
-  #   steps:
-  #     - task: Docker@2
-  #       displayName: Build Docker Image
-  #       inputs:
-  #         repository: serivce/webhosted
-  #         command: build
-  #         Dockerfile: docker/Dockerfile
-  #         tags: '1.0'
+  - job: buildimage
+    displayName: build image
+    steps:
+      - task: Docker@2
+        displayName: Build Docker Image
+        inputs:
+          repository: serivce/webhosted
+          command: build
+          Dockerfile: docker/Dockerfile
+          tags: '1.0'
   
-  # - job: Build_IIS_Service_job
-  #   dependsOn: buildimage
-  #   steps:
-  #   - checkout: self
-  #   displayName: Build and run web hosted service
-  #   services:
-  #     web_hosted_service: wcfservice
-
   - job: Build_IIS_Service_job
+    dependsOn: buildimage
     steps:
     - checkout: self
-  
-  - job: startcontainer
-    dependsOn: Build_IIS_Service_job
     displayName: Build and run web hosted service
     services:
-      web_hosted_service: web_hosted_service_container
+      web_hosted_service:
+      image: serivce/webhosted:1.0
+      # ports:
+      # - 6379/tcp
+
+
+  # - job: Build_IIS_Service_job
+  #   steps:
+  #   - checkout: self
+  
+  # - job: startcontainer
+  #   dependsOn: Build_IIS_Service_job
+  #   displayName: Build and run web hosted service
+  #   services:
+  #     web_hosted_service: web_hosted_service_container
       
 
 
