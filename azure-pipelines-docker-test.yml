@@ -83,7 +83,7 @@ stages:
     container: linux_container
     steps:
     - script: |
-        sudo apt install -y wget
+        apt install -y wget
     - script: eng/common/cibuild.sh
               -configuration Release
               -preparemachine
