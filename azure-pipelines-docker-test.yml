@@ -45,12 +45,34 @@ stages:
     - script: docker image list
     - script: dir
 
+  - job: test
+    displayName: build image
+    steps:
+      - task: Docker@2
+        displayName: Build Docker Image
+        inputs:
+          repository: serivce/webhosted
+          command: build
+          Dockerfile: image/Dockerfile
+          tags: '1.0'
+
+      - script: |
+          echo $(Build.SourcesDirectory)
+          dir
+        displayName: List files
+      
+      - script: |
+          echo "Executing docker run command"
+          docker run --name wcfservice -i -v $(Build.SourcesDirectory):/test -w /test serivce/webhosted:1.1
+        displayName: Run docker inline in pipeline
+
   - job: Build_IIS_Service_job
+    steps:
+    - checkout: self
     displayName: Build and run web hosted service
     services:
       web_hosted_service: web_hosted_service_container
-    steps:
-    - checkout: self
+
 
   - job: Build_Selfhosted_Service_job
     displayName: Build and run self-hosted service
