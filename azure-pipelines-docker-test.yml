@@ -16,17 +16,19 @@ resources:
   containers:
   - container: web_hosted_service_container
     #image: 'mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019'
-    image: 'mcr.microsoft.com/windows/nanoserver:1809'
-    #image: 'mcr.microsoft.com/dotnet/framework/wcf:latest'
+    #image: 'mcr.microsoft.com/windows/nanoserver:1809' --IIS not installed
+    image: 'mcr.microsoft.com/dotnet/framework/wcf:latest'
     #options: --entrypoint "./src/System.Private.ServiceModel/tools/scripts/SetupWcfIISHostedService.cmd 38" 
-    #options: --entrypoint "C:\__w\1\s\src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd"
+    #options: --entrypoint "__w\1\s\src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd"
+    options: --entrypoint "__w\1\s\src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd"
+
 
     #; wcf\src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd 38
   - container: windows_container
     image: 'mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019'
     #image: 'mcr.microsoft.com/dotnet/sdk:6.0'
   - container: linux_container
-    #image: 'ubuntu:20.04'
+    #image: 'ubuntu:20.04' --not working - wget/curl not found
     image: 'mcr.microsoft.com/dotnet/sdk:6.0'
     
   
@@ -41,12 +43,12 @@ stages:
     - script: docker image list
     - script: dir
 
-  # - job: Build_IIS_Service_job
-  #   displayName: Build and run web hosted service
-  #   services:
-  #     web_hosted_service: web_hosted_service_container
-  #   steps:
-  #   - checkout: self
+  - job: Build_IIS_Service_job
+    displayName: Build and run web hosted service
+    services:
+      web_hosted_service: web_hosted_service_container
+    steps:
+    - checkout: self
 
   - job: Build_Selfhosted_Service_job
     displayName: Build and run self-hosted service
@@ -85,27 +87,24 @@ stages:
     container: linux_container
 
 
-    steps:
-    - task: Bash@3
-      inputs:
-        targetType: filePath
-        filePath: 'eng/common/cibuild.sh'
-        arguments: -configuration Release
-              -preparemachine
-              /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
-              /p:Test=false
-        #displayName: Linux Build
+    # steps:
+    # - script: eng/common/cibuild.sh
+    #           -configuration Release
+    #           -preparemachine
+    #           /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
+    #           /p:Test=false
+    #   displayName: Linux Build
 
-    - script: eng/common/build.sh
-        --configuration Release
-        --prepareMachine
-        --ci
-        --test
-        --integrationTest
-        /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
-        /p:TestJob=Linux
-        /bl:$(Build.SourcesDirectory)/artifacts/log/Release/Tests.binlog
-      displayName: Linux - Run Tests
+    # - script: eng/common/build.sh
+    #     --configuration Release
+    #     --prepareMachine
+    #     --ci
+    #     --test
+    #     --integrationTest
+    #     /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
+    #     /p:TestJob=Linux
+    #     /bl:$(Build.SourcesDirectory)/artifacts/log/Release/Tests.binlog
+    #   displayName: Linux - Run Tests
 
   - job: Linux_debug_job
     displayName: Linux Debug tests
