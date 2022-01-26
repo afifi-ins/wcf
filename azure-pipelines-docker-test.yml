@@ -94,7 +94,7 @@ stages:
               -preparemachine
               /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
               /p:Test=false
-        displayName: Linux Build
+        #displayName: Linux Build
 
     - script: eng/common/build.sh
         --configuration Release
