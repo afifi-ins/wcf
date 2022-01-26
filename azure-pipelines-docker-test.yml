@@ -86,7 +86,7 @@ stages:
 
     steps:
     - script: |
-        apt list && apt-get update && apt-get install -y wget
+        sudo apt list && sudo apt-get update && sudo apt-get install -y wget
        
     - script: eng/common/cibuild.sh
               -configuration Release
