@@ -82,8 +82,8 @@ stages:
       vmImage: 'ubuntu-latest'
     container: linux_container
     steps:
-    - script: |
-        apt install -y wget
+    - bash: |
+        apt-get update && apt-get install -y wget
     - script: eng/common/cibuild.sh
               -configuration Release
               -preparemachine
