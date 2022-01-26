@@ -39,12 +39,12 @@ stages:
     - script: docker image list
     - script: dir
 
-  - job: Build_IIS_Service_job
-    displayName: Build and run web hosted service
-    services:
-      web_hosted_service: web_hosted_service_container
-    steps:
-    - checkout: self
+  # - job: Build_IIS_Service_job
+  #   displayName: Build and run web hosted service
+  #   services:
+  #     web_hosted_service: web_hosted_service_container
+  #   steps:
+  #   - checkout: self
 
   - job: Build_Selfhosted_Service_job
     displayName: Build and run self-hosted service
@@ -56,7 +56,7 @@ stages:
   jobs:
   - job: Windows_release_job
     displayName: Windows Release tests
-    container: windows_container
+    # container: windows_container
     # steps:
     # - script: eng\common\cibuild.cmd 
     #     -configuration Release
@@ -67,7 +67,7 @@ stages:
 
   - job: Windows_debug_job
     displayName: Windows Debug tests
-    container: windows_container
+    # container: windows_container
     # steps:
     # - script: eng\common\cibuild.cmd 
     #     -configuration Debug
