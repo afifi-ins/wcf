@@ -105,7 +105,6 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     container: linux_container
-
     steps:
     - script: eng/common/cibuild.sh
               -configuration Release
@@ -145,3 +144,4 @@ stages:
         /p:TestJob=Linux
         /bl:$(Build.SourcesDirectory)/artifacts/log/Debug/Tests.binlog
       displayName: Linux - Run Tests
+      
