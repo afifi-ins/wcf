@@ -19,17 +19,13 @@ resources:
     image: 'mcr.microsoft.com/windows/nanoserver:1809' #--IIS not installed
     #image: 'mcr.microsoft.com/dotnet/framework/wcf:latest'
     #options: --entrypoint "./src/System.Private.ServiceModel/tools/scripts/SetupWcfIISHostedService.cmd 38" 
-    options: --entrypoint "C:\wcf\src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd"  -v  D:\a\1\s:C:\wcf
+    options: --entrypoint "C:\__w\1\s\src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd" 
 
-    #options: --entrypoint "1/s/src/System.Private.ServiceModel/tools/scripts/SetupWcfIISHostedService.cmd"
-
-
-    #; wcf\src\System.Private.ServiceModel\tools\scripts\SetupWcfIISHostedService.cmd 38
   - container: windows_container
     image: 'mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019'
     #image: 'mcr.microsoft.com/dotnet/sdk:6.0'
   - container: linux_container
-    #image: 'ubuntu:20.04' --not working - wget/curl not found
+    #image: 'ubuntu:20.04' #--not working - wget/curl not found
     image: 'mcr.microsoft.com/dotnet/sdk:6.0'
     
   
@@ -48,78 +44,82 @@ stages:
           command: build
           Dockerfile: docker/Dockerfile
           tags: '1.0'
+
+      - bash: docker run --name WebHosted_container -i -v "$(Build.SourcesDirectory)":"C:\wcf" serivce/webhosted:1.0
+        displayName: Run docker wcf service
+
+
+  # - job: Build_IIS_Service_job
+  #   steps:
+  #   - checkout: self
+  
+  # - job: startcontainer
+  #   dependsOn: Build_IIS_Service_job
+  #   displayName: Build and run web hosted service
+  #   services:
+  #     web_hosted_service: web_hosted_service_container
       
-      - script: |
-          echo "Executing docker run command"
-          docker run --name wcfservice -i -v "$(Build.SourcesDirectory)":"C\wcf" -w \wcf serivce/webhosted:1.0
-        displayName: Run docker inline in pipeline
-
-  - job: Build_IIS_Service_job
-    dependsOn: buildimage
-    steps:
-    - checkout: self
-    displayName: Build and run web hosted service
-    services:
-      web_hosted_service: wcfservice
 
 
-  - job: Build_Selfhosted_Service_job
-    displayName: Build and run self-hosted service
-    steps:
-    - bash: echo "A"
-
-- stage: Run_WCF_Tests
-  displayName: Build and Run WCF Tests
-  jobs:
-  - job: Windows_release_job
-    displayName: Windows Release tests
-    # container: windows_container
-    # steps:
-    # - script: eng\common\cibuild.cmd 
-    #     -configuration Release
-    #     -preparemachine
-    #     /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
-    #     /p:Test=true /p:IntegrationTest=true /p:Pack=true /p:Publish=true
-    #   displayName: Run tests
-
-  - job: Windows_debug_job
-    displayName: Windows Debug tests
-    # container: windows_container
-    # steps:
-    # - script: eng\common\cibuild.cmd 
-    #     -configuration Debug
-    #     -preparemachine
-    #     /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
-    #     /p:Test=true /p:IntegrationTest=true /p:Pack=true /p:Publish=true
-    #   displayName: Run tests
-
-  - job: Linux_release_job
-    displayName: Linux Release tests
-    pool:
-      vmImage: 'ubuntu-latest'
-    container: linux_container
 
 
-    # steps:
-    # - script: eng/common/cibuild.sh
-    #           -configuration Release
-    #           -preparemachine
-    #           /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
-    #           /p:Test=false
-    #   displayName: Linux Build
+#   - job: Build_Selfhosted_Service_job
+#     displayName: Build and run self-hosted service
+#     steps:
+#     - bash: echo "A"
 
-    # - script: eng/common/build.sh
-    #     --configuration Release
-    #     --prepareMachine
-    #     --ci
-    #     --test
-    #     --integrationTest
-    #     /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
-    #     /p:TestJob=Linux
-    #     /bl:$(Build.SourcesDirectory)/artifacts/log/Release/Tests.binlog
-    #   displayName: Linux - Run Tests
+# - stage: Run_WCF_Tests
+#   displayName: Build and Run WCF Tests
+#   jobs:
+#   - job: Windows_release_job
+#     displayName: Windows Release tests
+#     # container: windows_container
+#     # steps:
+#     # - script: eng\common\cibuild.cmd 
+#     #     -configuration Release
+#     #     -preparemachine
+#     #     /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
+#     #     /p:Test=true /p:IntegrationTest=true /p:Pack=true /p:Publish=true
+#     #   displayName: Run tests
 
-  - job: Linux_debug_job
-    displayName: Linux Debug tests
-    steps:
-    - bash: echo "A"
+#   - job: Windows_debug_job
+#     displayName: Windows Debug tests
+#     # container: windows_container
+#     # steps:
+#     # - script: eng\common\cibuild.cmd 
+#     #     -configuration Debug
+#     #     -preparemachine
+#     #     /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
+#     #     /p:Test=true /p:IntegrationTest=true /p:Pack=true /p:Publish=true
+#     #   displayName: Run tests
+
+#   - job: Linux_release_job
+#     displayName: Linux Release tests
+#     pool:
+#       vmImage: 'ubuntu-latest'
+#     container: linux_container
+
+
+#     # steps:
+#     # - script: eng/common/cibuild.sh
+#     #           -configuration Release
+#     #           -preparemachine
+#     #           /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
+#     #           /p:Test=false
+#     #   displayName: Linux Build
+
+#     # - script: eng/common/build.sh
+#     #     --configuration Release
+#     #     --prepareMachine
+#     #     --ci
+#     #     --test
+#     #     --integrationTest
+#     #     /p:ServiceUri=wcfcoresrv3.redmond.corp.microsoft.com/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
+#     #     /p:TestJob=Linux
+#     #     /bl:$(Build.SourcesDirectory)/artifacts/log/Release/Tests.binlog
+#     #   displayName: Linux - Run Tests
+
+#   - job: Linux_debug_job
+#     displayName: Linux Debug tests
+#     steps:
+#     - bash: echo "A"
