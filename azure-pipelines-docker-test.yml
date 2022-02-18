@@ -45,7 +45,7 @@ stages:
           Dockerfile: Dockerfile
           tags: '1.0'
 
-      - bash: docker run --name WebHosted_container -i serivce/webhosted:1.0 #-v "$(Build.SourcesDirectory)":"C:\wcf" --privileged
+      - bash: docker run --name WebHosted_container -i --privileged serivce/webhosted:1.0 #-v "$(Build.SourcesDirectory)":"C:\wcf" --privileged
         displayName: Run docker wcf service
 
 
