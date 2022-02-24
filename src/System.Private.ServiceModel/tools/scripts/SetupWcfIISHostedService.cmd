@@ -176,10 +176,6 @@ if EXIST %_masterRepo% (
 )
 echo Use %_certService% for certificate service
 
-echo Build CertificateGenerator tool
-call :Run %_certRepo%\src\System.Private.ServiceModel\tools\scripts\BuildCertUtil.cmd
-if ERRORLEVEL 1 goto :Failure
-
 echo Run CertificateGenerator tool. This will take a little while...
 md %_wcfTestDir%
 set certGen=%_certRepo%\artifacts\bin\CertificateGenerator\Release\CertificateGenerator.exe

@@ -1,5 +1,5 @@
-#FROM mcr.microsoft.com/dotnet/framework/wcf
-FROM mcr.microsoft.com/dotnet/framework/sdk:4.8
+FROM mcr.microsoft.com/dotnet/framework/wcf
+#FROM mcr.microsoft.com/dotnet/framework/sdk:4.8
 COPY . /wcf
  
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'Continue'; $verbosePreference='Continue';"]
