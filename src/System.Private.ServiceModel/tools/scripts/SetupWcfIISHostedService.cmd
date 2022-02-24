@@ -175,13 +175,6 @@ if EXIST %_masterRepo% (
     set _certService=%_wcfServiceName%
 )
 
-:: TODO: Grant all existing app pools named WCFService# 'Read' access to %_wcfTestDir%. This is not needed for now
-
-:: Grant app pool %_certService% "Read" access to %_wcfTestDir% and its subdirectories
-echo Grant app pool %_certService% "Read" access to %_wcfTestDir% and its subdirectories
-call :Run icacls %_wcfTestDir% /grant:r "IIS APPPOOL\%_certService%":(OI)(CI)R /Q
-if ERRORLEVEL 1 goto :Failure
-
 :SkipCertInstall
 
 :: Unlock the configuration of sslFlags and Authentication
