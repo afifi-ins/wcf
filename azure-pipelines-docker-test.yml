@@ -48,6 +48,13 @@ stages:
       - bash: docker run --name WebHosted_container -i -d serivce/webhosted:1.0 #-v "$(Build.SourcesDirectory)":"C:\wcf" --privileged
         displayName: Run docker wcf service
 
+      - bash: docker ps 
+        displayName: docker ps
+      
+      - bash: docker inspect --format="{{.NetworkSettings.Networks.nat.IPAddress}}" WebHosted_container
+        displayName: docker inspect
+        
+        
 
   # - job: Build_IIS_Service_job
   #   steps:
