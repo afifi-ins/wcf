@@ -55,11 +55,6 @@ goto :NextArg
 
 :: Make sure this script is running in elevated
 if EXIST %_logFile% del %_logFile% /f /q
-net session>nul 2>&1
-if ERRORLEVEL 1 (
-    echo. & echo ERROR: Please run this script with elevated permission.
-    goto :Failure
-)
 
 :: Make sure IIS appcmd.exe is accessible
 set _appcmd=%windir%\System32\inetsrv\appcmd.exe
