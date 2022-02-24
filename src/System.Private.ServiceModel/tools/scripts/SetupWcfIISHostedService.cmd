@@ -174,18 +174,6 @@ if EXIST %_masterRepo% (
     set _certRepo=%_currentRepo%
     set _certService=%_wcfServiceName%
 )
-echo Use %_certService% for certificate service
-
-echo Run CertificateGenerator tool. This will take a little while...
-md %_wcfTestDir%
-set certGen=%_certRepo%\artifacts\bin\CertificateGenerator\Release\CertificateGenerator.exe
-echo ^<?xml version="1.0" encoding="utf-8"?^>^<configuration^>^<appSettings^>^<add key="testserverbase" value="%_certService%"/^>^<add key="CertExpirationInDay" value="%_certExpirationInDays%"/^>^<add key="CrlFileLocation" value="%_wcfTestDir%\test.crl"/^>^</appSettings^>^<startup^>^<supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5"/^>^</startup^>^</configuration^>>%certGen%.config
-call :Run %certGen%
-if ERRORLEVEL 1 goto :Failure
-
-echo Configue SSL certificate ports
-call :Run powershell -NoProfile -ExecutionPolicy unrestricted %_certRepo%\src\System.Private.ServiceModel\tools\scripts\ConfigHttpsPort.ps1
-if ERRORLEVEL 1 goto :Failure
 
 :: TODO: Grant all existing app pools named WCFService# 'Read' access to %_wcfTestDir%. This is not needed for now
 
