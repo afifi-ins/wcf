@@ -9,8 +9,8 @@ pr:
     - main
 
 pool:
-  #vmImage: 'windows-latest'
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-latest'
+  #vmImage: 'ubuntu-latest'
   
 resources:
   containers:
