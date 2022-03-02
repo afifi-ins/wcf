@@ -45,7 +45,7 @@ stages:
           Dockerfile: Dockerfile
           tags: '1.0'
 
-      - bash: docker run --name WebHosted_container -i -d serivce/webhosted:1.0 #-v "$(Build.SourcesDirectory)":"C:\wcf" --privileged
+      - bash: docker run --name WebHosted_container -i -d serivce/webhosted:1.0 -v "$(Build.SourcesDirectory)":"C:\wcf_vol"
         displayName: Run docker wcf service
 
       - bash: docker ps 
@@ -54,7 +54,12 @@ stages:
       - bash: docker inspect --format="{{.NetworkSettings.Networks.nat.IPAddress}}" WebHosted_container
         displayName: docker inspect
         
-        
+      - script: eng\common\cibuild.cmd 
+         -configuration Release
+         -preparemachine
+         /p:ServiceUri=WebHosted_container/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
+         /p:Test=true /p:IntegrationTest=true /p:Pack=true /p:Publish=true
+        displayName: Run tests
 
   # - job: Build_IIS_Service_job
   #   steps:
