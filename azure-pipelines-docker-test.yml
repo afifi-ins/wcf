@@ -37,6 +37,10 @@ stages:
   - job: buildimage
     displayName: build image
     steps:
+    
+      - script: src\System.Private.ServiceModel\tools\scripts\PingWcfService.ps1 "wcfcoresrv3.redmond.corp.microsoft.com/WcfService38/TestHost.svc/Ping"
+        displayName: ping service1
+        
       - task: Docker@2
         displayName: Build Docker Image
         inputs:
@@ -45,8 +49,6 @@ stages:
           Dockerfile: Dockerfile
           tags: '1.0'
 
-      - script: src\System.Private.ServiceModel\tools\scripts\PingWcfService.ps1 "wcfcoresrv3.redmond.corp.microsoft.com/WcfService38/TestHost.svc/Ping"
-        displayName: ping service1
 
       - bash: docker run --name webhosted_container -i -d serivce/webhosted:1.0  #-d  -v "$(Build.SourcesDirectory)":"C:\wcf_src"
         displayName: Run docker wcf service
