@@ -45,19 +45,19 @@ stages:
           Dockerfile: Dockerfile
           tags: '1.0'
 
-      - bash: docker run --name WebHosted_container -i -v "$(Build.SourcesDirectory)":"C:\wcf" serivce/webhosted:1.0  #-d
+      - bash: docker run --name webhosted_container -i -d serivce/webhosted:1.0  #-d  -v "$(Build.SourcesDirectory)":"C:\wcf_src"
         displayName: Run docker wcf service
 
       - bash: docker ps 
         displayName: docker ps
       
-      - bash: docker inspect --format="{{.NetworkSettings.Networks.nat.IPAddress}}" WebHosted_container
+      - bash: docker inspect --format="{{.NetworkSettings.Networks.nat.IPAddress}}" webhosted_container
         displayName: docker inspect
         
       - script: eng\common\cibuild.cmd 
          -configuration Release
          -preparemachine
-         /p:ServiceUri=WebHosted_container/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
+         /p:ServiceUri=webhosted_container/WcfService38 /p:Root_Certificate_Installed=true /p:Client_Certificate_Installed=true /p:SSL_Available=true
          /p:Test=true /p:IntegrationTest=true /p:Pack=true /p:Publish=true
         displayName: Run tests
 
