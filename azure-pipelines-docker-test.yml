@@ -45,6 +45,9 @@ stages:
           Dockerfile: Dockerfile
           tags: '1.0'
 
+      - bash: C:\wcf\src\System.Private.ServiceModel\tools\scripts\PingWcfService.ps1 "wcfcoresrv3.redmond.corp.microsoft.com/WcfService38/TestHost.svc/Ping"
+        displayName: ping service1
+
       - bash: docker run --name webhosted_container -i -d serivce/webhosted:1.0  #-d  -v "$(Build.SourcesDirectory)":"C:\wcf_src"
         displayName: Run docker wcf service
 
@@ -53,6 +56,9 @@ stages:
       
       - bash: docker inspect --format="{{.NetworkSettings.Networks.nat.IPAddress}}" webhosted_container
         displayName: docker inspect
+        
+      - bash: C:\wcf\src\System.Private.ServiceModel\tools\scripts\PingWcfService.ps1 "webhosted_container/WcfService38/TestHost.svc/Ping"
+        displayName: ping service2
         
       - script: eng\common\cibuild.cmd 
          -configuration Release
