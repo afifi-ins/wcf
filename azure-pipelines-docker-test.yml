@@ -38,7 +38,7 @@ stages:
     displayName: build image
     steps:
     
-      - script: src\System.Private.ServiceModel\tools\scripts\PingWcfService.ps1 "wcfcoresrv3.redmond.corp.microsoft.com/WcfService38/TestHost.svc/Ping"
+      - script: src\System.Private.ServiceModel\tools\scripts\PingWcfService.ps1 "http://wcfcoresrv3.redmond.corp.microsoft.com/WcfService38/TestHost.svc/Ping"
         displayName: ping service1
         
       - task: Docker@2
@@ -59,7 +59,7 @@ stages:
       - bash: docker inspect --format="{{.NetworkSettings.Networks.nat.IPAddress}}" webhosted_container
         displayName: docker inspect
         
-      - script: src\System.Private.ServiceModel\tools\scripts\PingWcfService.ps1 "webhosted_container/WcfService38/TestHost.svc/Ping"
+      - script: src\System.Private.ServiceModel\tools\scripts\PingWcfService.ps1 "http://webhosted_container/WcfService38/TestHost.svc/Ping"
         displayName: ping service2
         
       - script: eng\common\cibuild.cmd 
