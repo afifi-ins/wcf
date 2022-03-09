@@ -37,7 +37,13 @@ stages:
   - job: buildimage
     displayName: build image
     steps:
-    
+      - task: PowerShell@2
+        inputs:
+          filePath: 'src\System.Private.ServiceModel\tools\scripts\PingWcfService.ps1'
+          arguments: 'http://wcfcoresrv3.redmond.corp.microsoft.com/WcfService38/TestHost.svc/Ping'
+          failOnStderr: true
+          showWarnings: true
+          
       - script: src\System.Private.ServiceModel\tools\scripts\PingWcfService.ps1 "http://wcfcoresrv3.redmond.corp.microsoft.com/WcfService38/TestHost.svc/Ping"
         displayName: ping service1
         
