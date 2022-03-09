@@ -58,8 +58,10 @@ stages:
 
       - bash: docker ps 
         displayName: docker ps
-      
-      - bash:  echo "##vso[task.setvariable variable=WCFServiceURI;]docker inspect --format="{{.NetworkSettings.Networks.nat.IPAddress}}" webhosted_container" 
+
+      - bash: |
+          export WCFServiceURI=$(docker inspect --format="{{.NetworkSettings.Networks.nat.IPAddress}}" webhosted_container)
+          echo "##vso[task.setvariable variable=WCFServiceURI]$WCFServiceURI"
         displayName: docker inspect
         
       - bash: echo "You can use macro syntax for variables:$(WCFServiceURI)"
