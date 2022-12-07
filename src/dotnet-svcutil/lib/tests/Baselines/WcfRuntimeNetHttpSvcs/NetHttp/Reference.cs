@@ -2667,14 +2667,21 @@ namespace NetHttp_NS
             }
             if ((endpointConfiguration == EndpointConfiguration.Text_IWcfService))
             {
-                System.ServiceModel.Channels.CustomBinding result = new System.ServiceModel.Channels.CustomBinding();
-                System.ServiceModel.Channels.TextMessageEncodingBindingElement textBindingElement = new System.ServiceModel.Channels.TextMessageEncodingBindingElement();
-                result.Elements.Add(textBindingElement);
-                System.ServiceModel.Channels.HttpTransportBindingElement httpBindingElement = new System.ServiceModel.Channels.HttpTransportBindingElement();
-                httpBindingElement.AllowCookies = true;
-                httpBindingElement.MaxBufferSize = int.MaxValue;
-                httpBindingElement.MaxReceivedMessageSize = int.MaxValue;
-                result.Elements.Add(httpBindingElement);
+                System.ServiceModel.WSHttpBinding result = new System.ServiceModel.WSHttpBinding();
+                result.ReaderQuotas = System.Xml.XmlDictionaryReaderQuotas.Max;
+                result.MaxReceivedMessageSize = int.MaxValue;
+                result.AllowCookies = true;
+                result.Security.Mode = System.ServiceModel.SecurityMode.None;
+                return result;
+            }
+            if ((endpointConfiguration == EndpointConfiguration.Mtom_IWcfService))
+            {
+                System.ServiceModel.WSHttpBinding result = new System.ServiceModel.WSHttpBinding();
+                result.ReaderQuotas = System.Xml.XmlDictionaryReaderQuotas.Max;
+                result.MaxReceivedMessageSize = int.MaxValue;
+                result.AllowCookies = true;
+                result.MessageEncoding = System.ServiceModel.WSMessageEncoding.Mtom;
+                result.Security.Mode = System.ServiceModel.SecurityMode.None;
                 return result;
             }
             throw new System.InvalidOperationException(string.Format("Could not find endpoint with name \'{0}\'.", endpointConfiguration));
@@ -2684,11 +2691,16 @@ namespace NetHttp_NS
         {
             if ((endpointConfiguration == EndpointConfiguration.Binary_IWcfService))
             {
-                return new System.ServiceModel.EndpointAddress("http://wcfcoresrv5.westus2.cloudapp.azure.com/WcfTestService1/NetHttp.svc/Binary");
+                return new System.ServiceModel.EndpointAddress("http://wcfcoresrv53.westus3.cloudapp.azure.com/WcfTestService1/NetHttp.svc/Binary" +
+                        "");
             }
             if ((endpointConfiguration == EndpointConfiguration.Text_IWcfService))
             {
-                return new System.ServiceModel.EndpointAddress("http://wcfcoresrv5.westus2.cloudapp.azure.com/WcfTestService1/NetHttp.svc/Text");
+                return new System.ServiceModel.EndpointAddress("http://wcfcoresrv53.westus3.cloudapp.azure.com/WcfTestService1/NetHttp.svc/Text");
+            }
+            if ((endpointConfiguration == EndpointConfiguration.Mtom_IWcfService))
+            {
+                return new System.ServiceModel.EndpointAddress("http://wcfcoresrv53.westus3.cloudapp.azure.com/WcfTestService1/NetHttp.svc/Mtom");
             }
             throw new System.InvalidOperationException(string.Format("Could not find endpoint with name \'{0}\'.", endpointConfiguration));
         }
@@ -2699,6 +2711,8 @@ namespace NetHttp_NS
             Binary_IWcfService,
             
             Text_IWcfService,
+            
+            Mtom_IWcfService,
         }
     }
 }

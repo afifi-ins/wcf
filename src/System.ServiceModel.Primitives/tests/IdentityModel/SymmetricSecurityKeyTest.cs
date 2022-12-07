@@ -25,7 +25,7 @@ public static class SymmetricSecurityKeyTest
         string algorit = "DES";
         MockGetSymmetricAlgorithm mgsaalg = new MockGetSymmetricAlgorithm();
         Assert.NotNull(mgsaalg.GetSymmetricAlgorithm(algorit));
-        Assert.IsAssignableFrom<DESCryptoServiceProvider>(mgsaalg.GetSymmetricAlgorithm(algorit));
+        Assert.IsAssignableFrom<DES>(mgsaalg.GetSymmetricAlgorithm(algorit));
     }
 }
 
@@ -70,7 +70,14 @@ public class MockGetSymmetricAlgorithm : SymmetricSecurityKey
 
     public override SymmetricAlgorithm GetSymmetricAlgorithm(string algorithm)
     {
-        return new DESCryptoServiceProvider();
+        if (algorithm == "DES")
+        {
+            return DES.Create();
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public override byte[] GetSymmetricKey()

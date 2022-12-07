@@ -63,6 +63,14 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
                 ProjectDependency.FromPackage("System.ServiceModel.Http", "4.8.*"    ),
                 ProjectDependency.FromPackage("System.ServiceModel.NetTcp", "4.8.*"  ),
                 ProjectDependency.FromPackage("System.ServiceModel.Security", "4.8.*"),
+                ProjectDependency.FromPackage("System.ServiceModel.Federation", "4.8.*")
+            } },
+            {new Version("6.0"), new List<ProjectDependency> {
+                ProjectDependency.FromPackage("System.ServiceModel.Duplex", "4.10.*"  ),
+                ProjectDependency.FromPackage("System.ServiceModel.Http", "4.10.*"    ),
+                ProjectDependency.FromPackage("System.ServiceModel.NetTcp", "4.10.*"  ),
+                ProjectDependency.FromPackage("System.ServiceModel.Security", "4.10.*"),
+                ProjectDependency.FromPackage("System.ServiceModel.Federation", "4.10.*")
             } }
         };
 
@@ -81,6 +89,7 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
             ProjectDependency.FromPackage("System.Private.ServiceModel", "*"),
             ProjectDependency.FromPackage("System.ServiceModel.Security", "*"),
             ProjectDependency.FromPackage("System.Xml.XmlSerializer", "*"),
+            ProjectDependency.FromPackage("System.ServiceModel.Federation", "*")
         };
 
         public static Version MinSupportedNetFxVersion { get; } = new Version("4.5");
@@ -119,7 +128,7 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
         public static string GetBestFitTargetFramework(IEnumerable<string> targetFrameworks)
         {
             string targetFramework = string.Empty;
-            FrameworkInfo fxInfo;
+            FrameworkInfo fxInfo = null;
 
             if (targetFrameworks != null)
             {
@@ -136,6 +145,11 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
                         }
                     }
                 }
+            }
+
+            if (fxInfo != null)
+            {
+                return fxInfo.FullName;
             }
 
             return targetFramework;
@@ -194,6 +208,12 @@ namespace Microsoft.Tools.ServiceModel.Svcutil
         public static bool IsSupportedFramework(string fullFrameworkName, out FrameworkInfo frameworkInfo)
         {
             bool isSupported = false;
+
+            var tfx = fullFrameworkName.Split('-');
+            if (tfx.Length > 1)
+            {
+                fullFrameworkName = tfx[0];
+            }
 
             if (FrameworkInfo.TryParse(fullFrameworkName, out frameworkInfo))
             {

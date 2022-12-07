@@ -8,6 +8,21 @@
 
 ## Version History
 
+### 4.10.0
+
+* [NuGet Package](https://www.nuget.org/packages/System.Web.Services.Description/4.10.0)
+* [Release tag](https://github.com/dotnet/wcf/releases/tag/v3.4.0-rtm)
+
+### 4.9.0
+
+* [NuGet Package](https://www.nuget.org/packages/System.Web.Services.Description/4.9.0)
+* [Release tag](https://github.com/dotnet/wcf/releases/tag/v3.3.0-rtm)
+
+### 4.9.0-RC2
+
+* [NuGet Package](https://www.nuget.org/packages/System.Web.Services.Description/4.9.0-rc2.21473.1)
+* [Release tag](https://github.com/dotnet/wcf/releases/tag/v3.3.0-rc2)
+
 ### 4.9.0-RC1
 
 * [NuGet Package](https://www.nuget.org/packages/System.Web.Services.Description/4.9.0-rc1.21431.2)
