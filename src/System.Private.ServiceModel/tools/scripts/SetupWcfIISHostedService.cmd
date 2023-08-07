@@ -55,11 +55,6 @@ goto :NextArg
 
 :: Make sure this script is running in elevated
 if EXIST %_logFile% del %_logFile% /f /q
-net session>nul 2>&1
-if ERRORLEVEL 1 (
-    echo. & echo ERROR: Please run this script with elevated permission.
-    goto :Failure
-)
 
 :: Make sure IIS appcmd.exe is accessible
 set _appcmd=%windir%\System32\inetsrv\appcmd.exe
@@ -184,29 +179,6 @@ if EXIST %_masterRepo% (
     set _certRepo=%_currentRepo%
     set _certService=%_wcfServiceName%
 )
-echo Use %_certService% for certificate service
-
-echo Build CertificateGenerator tool
-call :Run %_certRepo%\src\System.Private.ServiceModel\tools\scripts\BuildCertUtil.cmd
-if ERRORLEVEL 1 goto :Failure
-
-echo Run CertificateGenerator tool. This will take a little while...
-md %_wcfTestDir%
-set certGen=%_certRepo%\artifacts\bin\CertificateGenerator\Release\CertificateGenerator.exe
-echo ^<?xml version="1.0" encoding="utf-8"?^>^<configuration^>^<appSettings^>^<add key="testserverbase" value="%_certService%"/^>^<add key="CertExpirationInDay" value="%_certExpirationInDays%"/^>^<add key="CrlFileLocation" value="%_wcfTestDir%\test.crl"/^>^</appSettings^>^<startup^>^<supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5"/^>^</startup^>^</configuration^>>%certGen%.config
-call :Run %certGen%
-if ERRORLEVEL 1 goto :Failure
-
-echo Configue SSL certificate ports
-call :Run powershell -NoProfile -ExecutionPolicy unrestricted %_certRepo%\src\System.Private.ServiceModel\tools\scripts\ConfigHttpsPort.ps1
-if ERRORLEVEL 1 goto :Failure
-
-:: TODO: Grant all existing app pools named WCFService# 'Read' access to %_wcfTestDir%. This is not needed for now
-
-:: Grant app pool %_certService% "Read" access to %_wcfTestDir% and its subdirectories
-echo Grant app pool %_certService% "Read" access to %_wcfTestDir% and its subdirectories
-call :Run icacls %_wcfTestDir% /grant:r "IIS APPPOOL\%_certService%":(OI)(CI)R /Q
-if ERRORLEVEL 1 goto :Failure
 
 :SkipCertInstall
 
