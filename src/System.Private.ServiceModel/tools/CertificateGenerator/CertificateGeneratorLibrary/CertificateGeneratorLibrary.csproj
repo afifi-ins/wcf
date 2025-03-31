@@ -1,8 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\IISHostedWcfService\App_code\CertificateHelper\CertificateHelper.cs" Link="CertificateHelper.cs" />
+    <Compile Include="..\..\IISHostedWcfService\App_code\CertificateHelper\SafeKeychainHandle.cs" Link="SafeKeychainHandle.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="BouncyCastle.Cryptography" Version="2.3.1" />

@@ -236,7 +236,11 @@ namespace WcfService
                 store = CertificateHelper.GetX509Store(name, location);
 
                 X509Certificate2Collection foundCertificates = store.Certificates.Find(X509FindType.FindByIssuerName, "DO_NOT_TRUST_WcfBridgeRootCA", false);
-                string friendlyNameHash = CertificateGenerator.HashFriendlyNameToString(friendlyName);
+
+                string friendlyNameHash = string.Empty;
+#if NET
+                friendlyNameHash = CertificateGenerator.HashFriendlyNameToString(friendlyName);
+#endif
                 foreach (X509Certificate2 cert in foundCertificates)
                 {
                     // Search by serial number in Linux/MacOS

@@ -43,7 +43,13 @@ namespace Infrastructure.Common
             return true;
         }
 
-        public override bool IsInvalid => handle == IntPtr.Zero;
+        public override bool IsInvalid
+        {
+            get
+            {
+                return handle == IntPtr.Zero;
+            }
+        }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static SafeKeychainHandle Create(string pathName, string passphrase)
@@ -55,7 +61,7 @@ namespace Infrastructure.Common
             if (osStatus != 0)
             {
                 keychain.Dispose();
-                throw new InvalidOperationException($"OSStatus={osStatus}");
+                throw new InvalidOperationException(string.Format("OSStatus={0}", osStatus));
             }
 
             return keychain;
@@ -70,7 +76,7 @@ namespace Infrastructure.Common
             if (osStatus != 0)
             {
                 keychain.Dispose();
-                throw new InvalidOperationException($"OSStatus={osStatus}");
+                throw new InvalidOperationException(string.Format("OSStatus={0}", osStatus));
             }
 
             if(!string.IsNullOrEmpty(passphrase))
@@ -81,7 +87,7 @@ namespace Infrastructure.Common
                 if (osStatus != 0)
                 {
                     keychain.Dispose();
-                    throw new InvalidOperationException($"OSStatus={osStatus}");
+                    throw new InvalidOperationException(string.Format("OSStatus={0}", osStatus));
                 }
             }
 
@@ -99,7 +105,7 @@ namespace Infrastructure.Common
 
             if (osStatus != 0)
             {
-                throw new InvalidOperationException($"OSStatus={osStatus}");
+                throw new InvalidOperationException(string.Format("OSStatus={0}", osStatus));
             }
         }
     }

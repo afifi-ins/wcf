@@ -17,23 +17,35 @@ namespace WcfTestCommon
             /// <summary>
             /// Returns true if current OS is Windows
             /// </summary>
-            public static bool IsWindows() => IsOSPlatform(OSPlatform.Windows);
+            public static bool IsWindows()
+            {
+                return IsOSPlatform(OSPlatform.Windows);
+            }
 
             /// <summary>
             /// Returns true if current OS is Linux
             /// </summary>
-            public static bool IsLinux() => IsOSPlatform(OSPlatform.Linux);
+            public static bool IsLinux()
+            {
+                return IsOSPlatform(OSPlatform.Linux);
+            }
 
             /// <summary>
             /// Returns true if current OS is OSX
             /// </summary>
-            public static bool IsMacOS() => IsOSPlatform(OSPlatform.OSX);
+            public static bool IsMacOS()
+            {
+                return IsOSPlatform(OSPlatform.OSX);
+            }
 
             /// <summary>
             /// Returns true if current OS matches OSPlatform
             /// </summary>
             /// <param name="os">OS Platform to check for</param>
-            public static bool IsOSPlatform(OSPlatform osPlatform) => RuntimeInformation.IsOSPlatform(osPlatform);
+            public static bool IsOSPlatform(OSPlatform osPlatform)
+            {
+                return RuntimeInformation.IsOSPlatform(osPlatform);
+            }
         }
 
         public static X509Store GetX509Store(StoreName storeName, StoreLocation storeLocation)
@@ -70,10 +82,21 @@ namespace WcfTestCommon
             return store;
         }
 
+        internal static string OSXCustomKeychainFilePath
+        {
+            get
+            {
+                return Path.Combine(Environment.CurrentDirectory, "wcfLocal.keychain");
+            }
+        }
 
-        internal static string OSXCustomKeychainFilePath => Path.Combine(Environment.CurrentDirectory, "wcfLocal.keychain");
-
-        internal static string OSXCustomKeychainPassword => "WCFKeychainFilePassword";
+        internal static string OSXCustomKeychainPassword
+        {
+            get
+            {
+                return "WCFKeychainFilePassword";
+            }
+        }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static X509Store GetMacOSX509Store(string storeFilePath = null)
