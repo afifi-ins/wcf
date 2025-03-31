@@ -22,6 +22,7 @@
       <Visible>true</Visible>
       <Link>IIS/%(RecursiveDir)%(Filename)%(Extension)</Link>
     </Compile>
+    <Compile Remove="..\IISHostedWcfService\App_code\CertificateHelper\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="..\IISHostedWcfService\App_code\testhosts\Federation\AcceptAnyUsernameSecurityTokenHandler.cs" />
