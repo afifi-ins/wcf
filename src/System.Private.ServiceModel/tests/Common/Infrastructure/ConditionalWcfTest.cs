@@ -328,7 +328,7 @@ namespace Infrastructure.Common
             // Temporarily use the simple heuristic that if we are running the services locally, it is.
             // Refactor this after integration to address https://github.com/dotnet/wcf/issues/1024 
             return GetConditionValue(nameof(Windows_Authentication_Available),
-                                     Server_Is_LocalHost);
+                                     Server_Is_LocalHost) && Is_Windows();
         }
 
         // Returns true if NTLM is available to use.
