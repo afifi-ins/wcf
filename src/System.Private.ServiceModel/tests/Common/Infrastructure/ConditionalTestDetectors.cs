@@ -142,20 +142,6 @@ namespace Infrastructure.Common
             return OSID.AnyWindows.MatchesCurrent();
         }
 
-        public static bool IsWindowsOrSelfHosted()
-        {
-            if (IsWindows())
-            {
-                return true;
-            }
-            else if (!IsIISHosted())
-            {
-                return true;
-            }
-
-            return false;
-        }
-
         // Returns 'true' if the server is running with CoreWCF Service
         public static bool IsRunWithCoreWCFService()
         {
