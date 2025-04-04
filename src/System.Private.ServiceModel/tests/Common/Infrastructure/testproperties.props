@@ -145,8 +145,8 @@
     <IncludeTestsWithIssues>true</IncludeTestsWithIssues>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(RunWithCoreWCFService)' == ''">
-    <RunWithCoreWCFService></RunWithCoreWCFService>
+  <PropertyGroup Condition="'$(RunWithCoreWCF)' == ''">
+    <RunWithCoreWCF></RunWithCoreWCF>
   </PropertyGroup>
   <!--
      GeneratedTestPropertiesFileName:

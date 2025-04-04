@@ -25,7 +25,8 @@ public class Tcp_ClientCredentialTypeCertificateCanonicalNameTests : Conditional
     // to pass a variation or fail a variation. 
 
     [WcfFact]
-    [Condition(nameof(Root_Certificate_Installed))]
+    [Condition(nameof(Root_Certificate_Installed),
+               nameof(Skip_CoreWCFService_FailedTest))]
     [OuterLoop]
     public static void Certificate_With_CanonicalName_Localhost_Address_EchoString()
     {

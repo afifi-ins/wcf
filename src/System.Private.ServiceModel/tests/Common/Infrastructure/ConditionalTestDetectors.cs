@@ -145,7 +145,7 @@ namespace Infrastructure.Common
         // Returns 'true' if the server is running with CoreWCF Service
         public static bool IsRunWithCoreWCFService()
         {
-            string runWithCoreWCFService = TestProperties.GetProperty(TestProperties.RunWithCoreWCFService_PropertyName);
+            string runWithCoreWCFService = TestProperties.GetProperty(TestProperties.RunWithCoreWCF_PropertyName);
 
             if (String.IsNullOrWhiteSpace(runWithCoreWCFService))
             {
