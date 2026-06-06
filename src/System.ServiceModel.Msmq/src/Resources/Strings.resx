@@ -61,4 +61,7 @@
   <data name="PlatformNotSupported_Msmq" xml:space="preserve">
     <value>MSMQ is not supported on this platform.</value>
   </data>
+  <data name="MsmqPoisonMessage" xml:space="preserve">
+    <value>The transport channel detected an incoming message that cannot be processed and that exceeded the configured allowed retries. Refer to the inner exception for details of the failure, and the documentation for the MsmqPoisonMessageException class for further guidance.</value>
+  </data>
 </root>

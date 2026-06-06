@@ -2,6 +2,11 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
   <file datatype="xml" source-language="en" target-language="cs" original="../Strings.resx">
     <body>
+      <trans-unit id="MsmqPoisonMessage">
+        <source>The transport channel detected an incoming message that cannot be processed and that exceeded the configured allowed retries. Refer to the inner exception for details of the failure, and the documentation for the MsmqPoisonMessageException class for further guidance.</source>
+        <target state="new">The transport channel detected an incoming message that cannot be processed and that exceeded the configured allowed retries. Refer to the inner exception for details of the failure, and the documentation for the MsmqPoisonMessageException class for further guidance.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="PlatformNotSupported_Msmq">
         <source>MSMQ is not supported on this platform.</source>
         <target state="new">MSMQ is not supported on this platform.</target>
