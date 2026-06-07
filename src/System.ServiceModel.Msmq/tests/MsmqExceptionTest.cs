@@ -64,9 +64,14 @@ public static class MsmqExceptionTest
     }
 
     [WcfFact]
-    public static void MsmqException_Default_HasZeroErrorCode()
+    public static void MsmqException_Default_ErrorCodeIsExternalExceptionDefault()
     {
-        Assert.Equal(0, new MsmqException().ErrorCode);
+        // ExternalException() uses E_FAIL (0x80004005) as the default
+        // HResult on .NET (Core+). The default ctor is rarely useful for
+        // MsmqException since callers normally have an actual MSMQ error
+        // code; we just lock the current behavior so it doesn't change
+        // silently.
+        Assert.Equal(unchecked((int)0x80004005), new MsmqException().ErrorCode);
     }
 
     [WcfFact]

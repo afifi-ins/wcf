@@ -112,6 +112,16 @@ namespace Infrastructure.Common
                                      ConditionalTestDetectors.IsMsmqInstalled);
         }
 
+        // Returns 'true' if TransactionManager.ImplicitDistributedTransactions
+        // is currently set. MSMQ scenarios that need a TransactionScope use
+        // this gate so they skip cleanly on hosts where implicit DTC isn't
+        // enabled (the .NET 8+ default) instead of failing.
+        public static bool ImplicitDtcEnabled()
+        {
+            return GetConditionValue(nameof(ImplicitDtcEnabled),
+                                     ConditionalTestDetectors.IsImplicitDtcEnabled);
+        }
+
         // Returns 'true' if both the server and the client are domain-joined.
         public static bool Domain_Joined()
         {

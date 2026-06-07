@@ -6,7 +6,6 @@
 using System.IO;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
-using System.Transactions;
 
 namespace System.ServiceModel.Channels
 {
@@ -80,7 +79,7 @@ namespace System.ServiceModel.Channels
                 encoded.Array,
                 encoded.Offset,
                 encoded.Count,
-                _factory.BindingElement.ExactlyOnce ? Transaction.Current : null,
+                _factory.BindingElement.ExactlyOnce,
                 _factory.BindingElement.TimeToLive,
                 timeout);
         }

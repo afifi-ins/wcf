@@ -6,7 +6,6 @@
 using System.Runtime.Versioning;
 using System.ServiceModel.Channels;
 using System.Threading.Tasks;
-using System.Transactions;
 
 namespace System.ServiceModel.MsmqIntegration
 {
@@ -58,7 +57,7 @@ namespace System.ServiceModel.MsmqIntegration
                     encoded.Offset,
                     encoded.Count,
                     property,
-                    _factory.BindingElement.ExactlyOnce ? Transaction.Current : null,
+                    _factory.BindingElement.ExactlyOnce,
                     _factory.BindingElement.TimeToLive,
                     timeout);
             }
