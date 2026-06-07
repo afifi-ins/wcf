@@ -6,11 +6,13 @@
 using System;
 using System.ComponentModel;
 using System.Net.Security;
+using System.Runtime.Versioning;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using Infrastructure.Common;
 using Xunit;
 
+[SupportedOSPlatform("windows")]
 public static class MsmqBindingTest
 {
     [WcfFact]
@@ -69,12 +71,13 @@ public static class MsmqBindingTest
     }
 
     [WcfFact]
-    public static void MsmqTransportBindingElement_BuildChannelFactory_NotYetImplemented()
+    public static void MsmqTransportBindingElement_BuildChannelFactory_ReturnsFactory()
     {
         var bel = new MsmqTransportBindingElement();
         var binding = new CustomBinding(new BinaryMessageEncodingBindingElement(), bel);
         var context = new BindingContext(binding, new BindingParameterCollection());
-        Assert.Throws<PlatformNotSupportedException>(() => bel.BuildChannelFactory<IOutputChannel>(context));
+        IChannelFactory<IOutputChannel> factory = bel.BuildChannelFactory<IOutputChannel>(context);
+        Assert.NotNull(factory);
     }
 
     [WcfFact]

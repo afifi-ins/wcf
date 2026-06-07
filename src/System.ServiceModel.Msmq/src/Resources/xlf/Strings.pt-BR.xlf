@@ -7,9 +7,19 @@
         <target state="new">The specified channel type {0} is not supported by this channel manager.</target>
         <note />
       </trans-unit>
+      <trans-unit id="MsmqInvalidScheme">
+        <source>The scheme of the URI is not valid for this MSMQ address translator.</source>
+        <target state="new">The scheme of the URI is not valid for this MSMQ address translator.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="MsmqListenerNotSupported">
         <source>The MSMQ client package does not support building channel listeners. Use CoreWCF to host an MSMQ service.</source>
         <target state="new">The MSMQ client package does not support building channel listeners. Use CoreWCF to host an MSMQ service.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MsmqMessagingNotAvailable">
+        <source>The MSMQ.Messaging assembly could not be loaded. Add a PackageReference to the MSMQ.Messaging NuGet package to your application so System.ServiceModel.Msmq can dispatch messages to the underlying queue.</source>
+        <target state="new">The MSMQ.Messaging assembly could not be loaded. Add a PackageReference to the MSMQ.Messaging NuGet package to your application so System.ServiceModel.Msmq can dispatch messages to the underlying queue.</target>
         <note />
       </trans-unit>
       <trans-unit id="MsmqNonNegativeArgumentExpected">
@@ -25,6 +35,21 @@
       <trans-unit id="MsmqSendNotYetImplemented">
         <source>The MSMQ send channel is not yet implemented in this build of System.ServiceModel.Msmq.</source>
         <target state="new">The MSMQ send channel is not yet implemented in this build of System.ServiceModel.Msmq.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MsmqUnexpectedPort">
+        <source>A port may not be specified on a net.msmq queue URI when using the native MSMQ transport protocol.</source>
+        <target state="new">A port may not be specified on a net.msmq queue URI when using the native MSMQ transport protocol.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MsmqWrongPrivateQueueSyntax">
+        <source>Private queues are addressed using '/private/&lt;name&gt;' in net.msmq URIs. The legacy '/private$' syntax is not supported.</source>
+        <target state="new">Private queues are addressed using '/private/&lt;name&gt;' in net.msmq URIs. The legacy '/private$' syntax is not supported.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MsmqWrongUri">
+        <source>The MSMQ queue URI is missing the host segment.</source>
+        <target state="new">The MSMQ queue URI is missing the host segment.</target>
         <note />
       </trans-unit>
       <trans-unit id="PlatformNotSupported_Msmq">

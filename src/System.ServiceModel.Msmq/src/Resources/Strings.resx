@@ -82,4 +82,19 @@
   <data name="MsmqListenerNotSupported" xml:space="preserve">
     <value>The MSMQ client package does not support building channel listeners. Use CoreWCF to host an MSMQ service.</value>
   </data>
+  <data name="MsmqInvalidScheme" xml:space="preserve">
+    <value>The scheme of the URI is not valid for this MSMQ address translator.</value>
+  </data>
+  <data name="MsmqWrongUri" xml:space="preserve">
+    <value>The MSMQ queue URI is missing the host segment.</value>
+  </data>
+  <data name="MsmqUnexpectedPort" xml:space="preserve">
+    <value>A port may not be specified on a net.msmq queue URI when using the native MSMQ transport protocol.</value>
+  </data>
+  <data name="MsmqWrongPrivateQueueSyntax" xml:space="preserve">
+    <value>Private queues are addressed using '/private/&lt;name&gt;' in net.msmq URIs. The legacy '/private$' syntax is not supported.</value>
+  </data>
+  <data name="MsmqMessagingNotAvailable" xml:space="preserve">
+    <value>The MSMQ.Messaging assembly could not be loaded. Add a PackageReference to the MSMQ.Messaging NuGet package to your application so System.ServiceModel.Msmq can dispatch messages to the underlying queue.</value>
+  </data>
 </root>

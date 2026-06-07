@@ -3,6 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 
+using System.Runtime.Versioning;
+
 namespace System.ServiceModel.Channels
 {
     public sealed class MsmqTransportBindingElement : MsmqBindingElementBase
@@ -74,18 +76,23 @@ namespace System.ServiceModel.Channels
                 || typeof(TChannel) == typeof(IOutputSessionChannel);
         }
 
+        [SupportedOSPlatform("windows")]
         public override IChannelFactory<TChannel> BuildChannelFactory<TChannel>(BindingContext context)
         {
             if (context == null)
             {
                 throw new ArgumentNullException(nameof(context));
             }
-            if (typeof(TChannel) != typeof(IOutputChannel) && typeof(TChannel) != typeof(IOutputSessionChannel))
+            if (typeof(TChannel) == typeof(IOutputChannel))
             {
-                throw new ArgumentException(SR.Format(SR.ChannelTypeNotSupported, typeof(TChannel)), "TChannel");
+                return (IChannelFactory<TChannel>)(object)new MsmqOutputChannelFactory(this, context);
             }
-            // Will be implemented in the queue/send slice.
-            throw new PlatformNotSupportedException(SR.MsmqSendNotYetImplemented);
+            if (typeof(TChannel) == typeof(IOutputSessionChannel))
+            {
+                // Session channels land in a follow-up slice.
+                throw new PlatformNotSupportedException(SR.MsmqSendNotYetImplemented);
+            }
+            throw new ArgumentException(SR.Format(SR.ChannelTypeNotSupported, typeof(TChannel)), "TChannel");
         }
     }
 }
