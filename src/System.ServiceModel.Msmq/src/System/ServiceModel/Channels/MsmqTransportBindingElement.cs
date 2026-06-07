@@ -89,8 +89,7 @@ namespace System.ServiceModel.Channels
             }
             if (typeof(TChannel) == typeof(IOutputSessionChannel))
             {
-                // Session channels land in a follow-up slice.
-                throw new PlatformNotSupportedException(SR.MsmqSendNotYetImplemented);
+                return (IChannelFactory<TChannel>)(object)new MsmqOutputSessionChannelFactory(this, context);
             }
             throw new ArgumentException(SR.Format(SR.ChannelTypeNotSupported, typeof(TChannel)), "TChannel");
         }
