@@ -67,25 +67,32 @@ namespace System.ServiceModel.Channels
             TimeSpan sendTimeout)
         {
             _ = sendTimeout; // MSMQ.Messaging.MessageQueue.Send has no per-call timeout.
-            using var queue = new MessageQueue("FormatName:" + formatName);
-            if (ambientTransaction != null)
+            try
             {
-                using var tx = new MessageQueueTransaction();
-                tx.Begin();
-                try
+                using var queue = new MessageQueue("FormatName:" + formatName);
+                if (ambientTransaction != null)
                 {
-                    queue.Send(message, tx);
-                    tx.Commit();
+                    using var tx = new MessageQueueTransaction();
+                    tx.Begin();
+                    try
+                    {
+                        queue.Send(message, tx);
+                        tx.Commit();
+                    }
+                    catch
+                    {
+                        try { tx.Abort(); } catch { }
+                        throw;
+                    }
                 }
-                catch
+                else
                 {
-                    try { tx.Abort(); } catch { }
-                    throw;
+                    queue.Send(message);
                 }
             }
-            else
+            catch (MessageQueueException mqEx)
             {
-                queue.Send(message);
+                throw new MsmqException(mqEx.Message, mqEx.ErrorCode).Normalized;
             }
         }
 
