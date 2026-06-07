@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 
+using System.Runtime.Versioning;
 using System.ServiceModel.Channels;
 
 namespace System.ServiceModel.MsmqIntegration
@@ -74,6 +75,7 @@ namespace System.ServiceModel.MsmqIntegration
             return typeof(TChannel) == typeof(IOutputChannel);
         }
 
+        [SupportedOSPlatform("windows")]
         public override IChannelFactory<TChannel> BuildChannelFactory<TChannel>(BindingContext context)
         {
             if (context == null)
@@ -84,7 +86,7 @@ namespace System.ServiceModel.MsmqIntegration
             {
                 throw new ArgumentException(SR.Format(SR.ChannelTypeNotSupported, typeof(TChannel)), "TChannel");
             }
-            throw new PlatformNotSupportedException(SR.MsmqSendNotYetImplemented);
+            return (IChannelFactory<TChannel>)(object)new MsmqIntegrationOutputChannelFactory(this, context);
         }
 
         public override T GetProperty<T>(BindingContext context)

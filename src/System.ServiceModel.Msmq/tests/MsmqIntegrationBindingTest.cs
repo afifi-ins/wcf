@@ -6,6 +6,7 @@
 using System;
 using System.ComponentModel;
 using System.Net.Security;
+using System.Runtime.Versioning;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.MsmqIntegration;
@@ -75,12 +76,14 @@ public static class MsmqIntegrationBindingTest
     }
 
     [WcfFact]
-    public static void MsmqIntegrationBindingElement_BuildChannelFactory_NotYetImplemented()
+    [SupportedOSPlatform("windows")]
+    public static void MsmqIntegrationBindingElement_BuildChannelFactory_ReturnsFactory()
     {
         var bel = new MsmqIntegrationBindingElement();
         var binding = new CustomBinding(bel);
         var context = new BindingContext(binding, new BindingParameterCollection());
-        Assert.Throws<PlatformNotSupportedException>(() => bel.BuildChannelFactory<IOutputChannel>(context));
+        IChannelFactory<IOutputChannel> factory = bel.BuildChannelFactory<IOutputChannel>(context);
+        Assert.NotNull(factory);
     }
 
     [WcfFact]
