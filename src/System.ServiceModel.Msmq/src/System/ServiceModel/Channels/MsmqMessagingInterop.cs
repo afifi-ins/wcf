@@ -92,7 +92,12 @@ namespace System.ServiceModel.Channels
             }
             catch (MessageQueueException mqEx)
             {
-                throw new MsmqException(mqEx.Message, mqEx.ErrorCode).Normalized;
+                // MessageQueueException.ErrorCode exposes a generic
+                // HRESULT (often 0x80004005). The actual native MSMQ
+                // error code (MQ_ERROR_*) is in MessageQueueErrorCode,
+                // whose enum values match the native constants exactly.
+                int code = unchecked((int)(uint)mqEx.MessageQueueErrorCode);
+                throw new MsmqException(mqEx.Message, code).Normalized;
             }
         }
 

@@ -103,6 +103,15 @@ namespace Infrastructure.Common
             return !Is_Windows();
         }
 
+        // Returns 'true' if the MSMQ Windows feature is installed on the
+        // client machine. Use as a [Condition] for any MSMQ scenario test
+        // that needs an actual queue manager.
+        public static bool MsmqInstalled()
+        {
+            return GetConditionValue(nameof(MsmqInstalled),
+                                     ConditionalTestDetectors.IsMsmqInstalled);
+        }
+
         // Returns 'true' if both the server and the client are domain-joined.
         public static bool Domain_Joined()
         {

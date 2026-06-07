@@ -31,8 +31,8 @@ public static class MsmqExceptionTest
     [InlineData(0xC00E000Bu, typeof(EndpointNotFoundException))] // ServiceNotAvailable
     [InlineData(0xC00E0050u, typeof(InvalidOperationException))] // TransactionUsage
     [InlineData(0xC00E0006u, typeof(InvalidOperationException))] // StaleHandle
-    [InlineData(0xC00E0025u, typeof(AddressAccessDeniedException))] // AccessDenied
-    [InlineData(0xC00E0009u, typeof(AddressAccessDeniedException))] // SharingViolation
+    [InlineData(0xC00E0025u, typeof(CommunicationException))]   // AccessDenied — see MsmqException for why this is CommunicationException, not AddressAccessDeniedException
+    [InlineData(0xC00E0009u, typeof(CommunicationException))]   // SharingViolation
     [InlineData(0xC00E0027u, typeof(CommunicationException))]    // InsufficientResources
     public static void Normalized_MapsErrorCodeToWcfExceptionType(uint code, Type expected)
     {

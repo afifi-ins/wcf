@@ -25,7 +25,9 @@ namespace System.ServiceModel
         public MsmqException(string message) : base(message) { }
         public MsmqException(string message, int error) : base(message, error) { }
         public MsmqException(string message, Exception inner) : base(message, inner) { }
+#pragma warning disable SYSLIB0051 // legacy formatter-based serialization support
         protected MsmqException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+#pragma warning restore SYSLIB0051
 
         internal bool FaultSender
         {
@@ -88,7 +90,13 @@ namespace System.ServiceModel
             {
                 // ----- Configuration errors -----
                 case MsmqErrorCodes.AccessDenied:
-                    _faultSender = true; _faultReceiver = true; _outerExceptionType = typeof(AddressAccessDeniedException); break;
+                    // AddressAccessDeniedException is not exposed in
+                    // System.ServiceModel.Primitives; we substitute
+                    // CommunicationException (its base) so the package
+                    // does not need to ship a duplicate exception type
+                    // that would conflict with the one in
+                    // System.ServiceModel.NetNamedPipe.
+                    _faultSender = true; _faultReceiver = true; _outerExceptionType = typeof(CommunicationException); break;
                 case MsmqErrorCodes.QueueDeleted:
                 case MsmqErrorCodes.QueueNotFound:
                     _faultSender = true; _faultReceiver = true; _outerExceptionType = typeof(EndpointNotFoundException); break;
@@ -98,7 +106,7 @@ namespace System.ServiceModel
                 case MsmqErrorCodes.UnsupportedFormatNameOperation:
                     _faultSender = true; _faultReceiver = true; _outerExceptionType = typeof(ArgumentException); break;
                 case MsmqErrorCodes.SharingViolation:
-                    _faultSender = true; _faultReceiver = true; _outerExceptionType = typeof(AddressAccessDeniedException); break;
+                    _faultSender = true; _faultReceiver = true; _outerExceptionType = typeof(CommunicationException); break;
 
                 // ----- Transient errors -----
                 case MsmqErrorCodes.IOTimeout:

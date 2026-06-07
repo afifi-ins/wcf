@@ -253,5 +253,20 @@ namespace Infrastructure.Common
             return TestProperties.GetProperty(TestProperties.NegotiateTestSpn_PropertyName);
         }
 
+        // Detector used by [ConditionalFact(nameof(MsmqInstalled))].
+        // Returns true if the MSMQ feature is installed on the host (we
+        // check for mqrt.dll under System32). MSMQ scenario tests need
+        // a running queue manager; this gate keeps them skipped on hosts
+        // that don't have the Windows MSMQ feature enabled.
+        public static bool IsMsmqInstalled()
+        {
+            if (!IsWindows())
+            {
+                return false;
+            }
+            string system32 = Environment.GetFolderPath(Environment.SpecialFolder.System);
+            return !string.IsNullOrEmpty(system32)
+                && System.IO.File.Exists(System.IO.Path.Combine(system32, "mqrt.dll"));
+        }
     }
 }
