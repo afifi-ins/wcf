@@ -51,11 +51,13 @@ namespace System.ServiceModel.MsmqIntegration
                 message, int.MaxValue, _factory.BufferManager);
             try
             {
+                MsmqIntegrationMessageProperty property = MsmqIntegrationMessageProperty.Get(message);
                 MsmqMessagingInterop.Send(
                     _formatName,
                     encoded.Array,
                     encoded.Offset,
                     encoded.Count,
+                    property,
                     _factory.BindingElement.ExactlyOnce ? Transaction.Current : null,
                     _factory.BindingElement.TimeToLive,
                     timeout);

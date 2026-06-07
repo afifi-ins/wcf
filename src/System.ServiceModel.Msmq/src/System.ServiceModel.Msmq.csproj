@@ -16,6 +16,7 @@
 
   <ItemGroup Condition="'$(TargetFramework)' != '$(NetFrameworkVersion)'">
     <ProjectReference Include="..\..\System.ServiceModel.Primitives\src\System.ServiceModel.Primitives.csproj" />
+    <PackageReference Include="MSMQ.Messaging" Version="1.0.4" />
   </ItemGroup>
 
   <!--The default source produced by the Arcade SDK does not work with the checked-in source file SR.cs (class/namespace/filename)-->
