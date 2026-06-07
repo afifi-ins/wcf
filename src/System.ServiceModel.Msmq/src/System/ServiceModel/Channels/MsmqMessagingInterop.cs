@@ -101,13 +101,28 @@ namespace System.ServiceModel.Channels
             }
             catch (MessageQueueException mqEx)
             {
-                // MessageQueueException.ErrorCode exposes a generic
-                // HRESULT (often 0x80004005). The actual native MSMQ
-                // error code (MQ_ERROR_*) is in MessageQueueErrorCode,
-                // whose enum values match the native constants exactly.
-                int code = unchecked((int)(uint)mqEx.MessageQueueErrorCode);
-                throw new MsmqException(mqEx.Message, code).Normalized;
+                throw ToMsmqException(mqEx).Normalized;
             }
+        }
+
+        // Wraps an MSMQ.Messaging.MessageQueueException as an MsmqException
+        // preserving the *native* MQ_ERROR_* code rather than the wrapper's
+        // generic HRESULT.
+        //
+        // Regression note: MessageQueueException.ErrorCode is the generic
+        // HRESULT (typically 0x80004005 / E_FAIL). The native MSMQ code
+        // (e.g. 0xC00E0003 MQ_ERROR_QUEUE_NOT_FOUND) lives in the
+        // MessageQueueErrorCode enum, whose values match the native
+        // constants exactly. We must convert through
+        // MessageQueueErrorCode for MsmqException.Normalized to find the
+        // right WCF exception in its mapping table; passing ErrorCode
+        // here falls through to the default branch and the caller sees a
+        // bare MsmqException for every error. See
+        // MsmqMessagingInteropTest.ToMsmqException_UsesNativeCodeNotHResult.
+        internal static MsmqException ToMsmqException(MessageQueueException mqEx)
+        {
+            int code = unchecked((int)(uint)mqEx.MessageQueueErrorCode);
+            return new MsmqException(mqEx.Message, code);
         }
 
         private static byte[] SliceBody(byte[] body, int offset, int count)
