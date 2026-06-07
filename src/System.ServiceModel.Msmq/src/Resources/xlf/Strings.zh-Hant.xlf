@@ -2,14 +2,44 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
   <file datatype="xml" source-language="en" target-language="zh-Hant" original="../Strings.resx">
     <body>
+      <trans-unit id="ChannelTypeNotSupported">
+        <source>The specified channel type {0} is not supported by this channel manager.</source>
+        <target state="new">The specified channel type {0} is not supported by this channel manager.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MsmqListenerNotSupported">
+        <source>The MSMQ client package does not support building channel listeners. Use CoreWCF to host an MSMQ service.</source>
+        <target state="new">The MSMQ client package does not support building channel listeners. Use CoreWCF to host an MSMQ service.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MsmqNonNegativeArgumentExpected">
+        <source>The value of this argument must be non-negative.</source>
+        <target state="new">The value of this argument must be non-negative.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="MsmqPoisonMessage">
         <source>The transport channel detected an incoming message that cannot be processed and that exceeded the configured allowed retries. Refer to the inner exception for details of the failure, and the documentation for the MsmqPoisonMessageException class for further guidance.</source>
         <target state="new">The transport channel detected an incoming message that cannot be processed and that exceeded the configured allowed retries. Refer to the inner exception for details of the failure, and the documentation for the MsmqPoisonMessageException class for further guidance.</target>
         <note />
       </trans-unit>
+      <trans-unit id="MsmqSendNotYetImplemented">
+        <source>The MSMQ send channel is not yet implemented in this build of System.ServiceModel.Msmq.</source>
+        <target state="new">The MSMQ send channel is not yet implemented in this build of System.ServiceModel.Msmq.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="PlatformNotSupported_Msmq">
         <source>MSMQ is not supported on this platform.</source>
         <target state="new">MSMQ is not supported on this platform.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SFxTimeoutOutOfRange0">
+        <source>Timeout must be greater than or equal to TimeSpan.Zero. To disable timeout, specify TimeSpan.MaxValue.</source>
+        <target state="new">Timeout must be greater than or equal to TimeSpan.Zero. To disable timeout, specify TimeSpan.MaxValue.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SFxTimeoutOutOfRangeTooBig">
+        <source>Timeouts larger than Int32.MaxValue TotalMilliseconds (approximately 24 days) cannot be honored. To disable timeout, specify TimeSpan.MaxValue.</source>
+        <target state="new">Timeouts larger than Int32.MaxValue TotalMilliseconds (approximately 24 days) cannot be honored. To disable timeout, specify TimeSpan.MaxValue.</target>
         <note />
       </trans-unit>
     </body>

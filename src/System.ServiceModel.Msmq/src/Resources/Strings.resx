@@ -64,4 +64,22 @@
   <data name="MsmqPoisonMessage" xml:space="preserve">
     <value>The transport channel detected an incoming message that cannot be processed and that exceeded the configured allowed retries. Refer to the inner exception for details of the failure, and the documentation for the MsmqPoisonMessageException class for further guidance.</value>
   </data>
+  <data name="MsmqNonNegativeArgumentExpected" xml:space="preserve">
+    <value>The value of this argument must be non-negative.</value>
+  </data>
+  <data name="SFxTimeoutOutOfRange0" xml:space="preserve">
+    <value>Timeout must be greater than or equal to TimeSpan.Zero. To disable timeout, specify TimeSpan.MaxValue.</value>
+  </data>
+  <data name="SFxTimeoutOutOfRangeTooBig" xml:space="preserve">
+    <value>Timeouts larger than Int32.MaxValue TotalMilliseconds (approximately 24 days) cannot be honored. To disable timeout, specify TimeSpan.MaxValue.</value>
+  </data>
+  <data name="ChannelTypeNotSupported" xml:space="preserve">
+    <value>The specified channel type {0} is not supported by this channel manager.</value>
+  </data>
+  <data name="MsmqSendNotYetImplemented" xml:space="preserve">
+    <value>The MSMQ send channel is not yet implemented in this build of System.ServiceModel.Msmq.</value>
+  </data>
+  <data name="MsmqListenerNotSupported" xml:space="preserve">
+    <value>The MSMQ client package does not support building channel listeners. Use CoreWCF to host an MSMQ service.</value>
+  </data>
 </root>
